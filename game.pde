@@ -13,7 +13,7 @@ public class game
   private int [] buttonTextXpos = {      buttonXpos[0] + buttonWidth/4      ,       buttonXpos[1] + 5*buttonWidth/18   };
   private int [] buttonTextYpos = {      buttonYpos[0] + 5*buttonHeight/6   ,       buttonYpos[1] + 5*buttonHeight/6   };
   
-  snake one = new snake ();
+  head head = new head ();
   food food = new food ();
   
   public void displayYesButton()
@@ -63,9 +63,9 @@ public class game
   public void lossScreen()
   {
     drawArena();
-    one.drawSnake(one.getXpos(), one.getYpos());
+    head.drawSnake(head.getXpos(), head.getYpos());
     food.redrawFood(food.getXpos(), food.getYpos());
-    one.setColorOOB();
+    head.setColorOOB();
     fill(0);
     textSize(100);
     textAlign(CENTER);
@@ -149,7 +149,7 @@ public class game
   
   public void displayDirection()
   {
-    char direction = one.getDirection();
+    char direction = head.getDirection();
     
     textSize(25);
     fill(0);
@@ -187,8 +187,8 @@ public class game
   
   public void showSnakePos()
   {
-    int xpos = one.getXpos();
-    int ypos = one.getYpos();
+    int xpos = head.getXpos();
+    int ypos = head.getYpos();
     
     fill(255, 0, 0);
     square(200, 775, 50);
@@ -203,20 +203,20 @@ public class game
     if(!gameLost)
     {
       delay(50);
-      one.storePosition();
-      one.move();
-      one.updatePosition();
-      if(one.foodCollision(food))
+      head.storePosition();
+      head.move();
+      head.updatePosition();
+      if(head.foodCollision(food))
       {
         food.updatePos();
         scoreIncrement();
       }
-      if(one.wallCollision())
+      if(head.wallCollision())
       {
         gameLost = true;
       }
       refreshScreen();
-      one.drawUnit();
+      head.drawUnit();
       food.display();
       //one.debugShowPreviousPos();
       //food.debug();
@@ -235,8 +235,8 @@ public class game
       {
         gameLost = false;
         resetScore();
-        one.resetSnake();
-        one.resetVelocity();
+        head.resetSnake();
+        head.resetVelocity();
       }
       if(detectNoButtonClicked())
       {

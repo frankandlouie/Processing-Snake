@@ -1,7 +1,7 @@
 import java.util.*;
 //import java.lang.Math;
 
-public class snake
+public class snakeSegment
 {
   Random rand = new Random();
   
@@ -13,6 +13,7 @@ public class snake
   private int tempX;
   private int tempY;
   private char direction;
+  int snakeSize = 1;
   //private int [] squareCenter = {(int)(xpos + (squareSize / 2) + 0.5), (int)(ypos + (squareSize / 2) + 0.5)};
   
   private char move;
@@ -226,8 +227,6 @@ public class snake
     }
     if(move == ' ')
     {
-      xpos = xpos;
-      ypos = ypos;
     }
   }
   
@@ -306,6 +305,13 @@ public class snake
   //  fill(255);
   //  textSize(100);
   //  text("SNAKE", width/75, height/6);
-  //}
-  
+  //}  
+}
+
+class head extends snakeSegment
+{
+  public void addToSnakeSize()
+  {
+    snakeSize += 3;
+  }
 }

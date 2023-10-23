@@ -5,24 +5,24 @@ public class snakeSegment
 {
   Random rand = new Random();
   
-  private int height = 700, width = 700;
-  private int squareSize = 25;
-  private color snakeColor = color(255, 0, 0);
-  private int xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-  private int ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-  private int tempX;
-  private int tempY;
-  private char direction;
-  int snakeSize = 1;
+  /*private*/ int height = 700, width = 700;
+  /*private*/ int squareSize = 25;
+  /*private*/ color snakeColor = color(255, 0, 0);
+  /*private*/ int xpos;
+  /*private*/ int ypos; // = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+  /*private*/ int tempX;
+  /*private*/ int tempY;
+  /*private*/ char direction;
+  //int snakeSize = 1;
   //private int [] squareCenter = {(int)(xpos + (squareSize / 2) + 0.5), (int)(ypos + (squareSize / 2) + 0.5)};
   
   private char move;
   
   //Index [0] = X coord, [1] = Y coord, [2] = Previous X, [3] = Previous Y
-  private int [] topLeftCorner = new int[4];
-  private int [] topRightCorner = new int[4];
-  private int [] bottomLeftCorner = new int[4];
-  private int [] bottomRightCorner = new int[4];
+  /*private*/ int [] topLeftCorner = new int[4];
+  /*private*/ int [] topRightCorner = new int[4];
+  /*private*/ int [] bottomLeftCorner = new int[4];
+  /*private*/ int [] bottomRightCorner = new int[4];
   
   public void resetSnake()
   {
@@ -235,27 +235,7 @@ public class snakeSegment
     move = ' ';
   }
   
-  public boolean foodCollision(food f)
-  {
-    boolean eaten = false; 
-    
-    if(topLeftCorner[0] == f.getTopLeftCornerX() && topLeftCorner[1] == f.getTopLeftCornerY())
-    {
-      if(topRightCorner[0] == f.getTopRightCornerX() && topRightCorner[1] == f.getTopRightCornerY())
-      {
-        if(bottomLeftCorner[0] == f.getBottomLeftCornerX() && bottomLeftCorner[1] == f.getBottomLeftCornerY())
-        {
-          if(bottomRightCorner[0] == f.getBottomRightCornerX() && bottomRightCorner[1] == f.getBottomRightCornerY())
-          {
-            textSize(50);
-            text("Food eaten", 400, 400);
-            eaten = true;
-          }
-        }
-      }
-    }
-    return eaten;
-  }
+  
   
   public boolean wallCollision()
   {
@@ -308,10 +288,38 @@ public class snakeSegment
   //}  
 }
 
-class head extends snakeSegment
+class snakeHead extends snakeSegment
 {
-  public void addToSnakeSize()
+  public snakeHead()
   {
-    snakeSize += 3;
+    xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;  
+  }
+  
+  public void poo()
+  {
+    System.out.println("This is the head");
+  }
+  
+  public boolean foodCollision(food f)
+  {
+    boolean eaten = false; 
+    
+    if(topLeftCorner[0] == f.getTopLeftCornerX() && topLeftCorner[1] == f.getTopLeftCornerY())
+    {
+      if(topRightCorner[0] == f.getTopRightCornerX() && topRightCorner[1] == f.getTopRightCornerY())
+      {
+        if(bottomLeftCorner[0] == f.getBottomLeftCornerX() && bottomLeftCorner[1] == f.getBottomLeftCornerY())
+        {
+          if(bottomRightCorner[0] == f.getBottomRightCornerX() && bottomRightCorner[1] == f.getBottomRightCornerY())
+          {
+            textSize(50);
+            text("Food eaten", 400, 400);
+            eaten = true;
+          }
+        }
+      }
+    }
+    return eaten;
   }
 }

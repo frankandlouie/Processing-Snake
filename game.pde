@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+
 public class game
 {
   private int width = 700, borderHeight = 700, inBounds = 650, height = 900;
   private int squareSize = 25;
   private int score = 0;
+  private int snakeSize = 1;
   private boolean gameLost = false;
   
   private int buttonWidth = 200;
@@ -13,8 +16,15 @@ public class game
   private int [] buttonTextXpos = {      buttonXpos[0] + buttonWidth/4      ,       buttonXpos[1] + 5*buttonWidth/18   };
   private int [] buttonTextYpos = {      buttonYpos[0] + 5*buttonHeight/6   ,       buttonYpos[1] + 5*buttonHeight/6   };
   
-  head head = new head ();
+  snakeHead head = new snakeHead ();
   food food = new food ();
+  
+  ArrayList<snakeSegment> snake = new ArrayList<snakeSegment>();
+  
+  public game()
+  {
+    snake.add(head);
+  }
   
   public void displayYesButton()
   {
@@ -63,9 +73,9 @@ public class game
   public void lossScreen()
   {
     drawArena();
-    head.drawSnake(head.getXpos(), head.getYpos());
+    snake.get(0).drawSnake(snake.get(0).getXpos(), snake.get(0).getYpos());
     food.redrawFood(food.getXpos(), food.getYpos());
-    head.setColorOOB();
+    snake.get(0).setColorOOB();
     fill(0);
     textSize(100);
     textAlign(CENTER);
@@ -149,7 +159,7 @@ public class game
   
   public void displayDirection()
   {
-    char direction = head.getDirection();
+    char direction = snake.get(0).getDirection();
     
     textSize(25);
     fill(0);
@@ -187,8 +197,8 @@ public class game
   
   public void showSnakePos()
   {
-    int xpos = head.getXpos();
-    int ypos = head.getYpos();
+    int xpos = snake.get(0).getXpos();
+    int ypos = snake.get(0).getYpos();
     
     fill(255, 0, 0);
     square(200, 775, 50);
@@ -198,25 +208,47 @@ public class game
     text("[" + (xpos - squareSize) + ", " + (ypos - squareSize)+ "]", 185, 850);
   }
   
+  public void increaseSnakeSize()
+  {
+    snakeSize += 5;
+    
+    for(int i = 0; i < 5; i++)
+    {
+      snake.add(new snakeSegment());
+    }
+  }
+  
   public void runGame()
   {
     if(!gameLost)
     {
       delay(50);
-      head.storePosition();
-      head.move();
-      head.updatePosition();
-      if(head.foodCollision(food))
+      //snake.get(0).storePosition();
+      for(snakeSegment s : snake)
+      {
+        s.storePosition();
+      }
+      snake.get(0).move();
+      for(snakeSegment s : snake)
+      {
+        s.updatePosition();
+      }
+      if(snake.get(0).foodCollision(food))
       {
         food.updatePos();
         scoreIncrement();
+        increaseSnakeSize();
       }
-      if(head.wallCollision())
+      if(snake.get(0).wallCollision())
       {
         gameLost = true;
       }
       refreshScreen();
-      head.drawUnit();
+      //snake.get(0).drawUnit();
+      for(snakeSegment s : snake)
+      {
+        s.drawUnit();
+      }
       food.display();
       //one.debugShowPreviousPos();
       //food.debug();
@@ -235,12 +267,12 @@ public class game
       {
         gameLost = false;
         resetScore();
-        head.resetSnake();
-        head.resetVelocity();
+        snake.get(0).resetSnake();
+        snake.get(0).resetVelocity();
       }
       if(detectNoButtonClicked())
       {
-        gameLost = true;
+        exit();
       }
     }
   }

@@ -16,14 +16,13 @@ public class game
   private int [] buttonTextXpos = {      buttonXpos[0] + buttonWidth/4      ,       buttonXpos[1] + 5*buttonWidth/18   };
   private int [] buttonTextYpos = {      buttonYpos[0] + 5*buttonHeight/6   ,       buttonYpos[1] + 5*buttonHeight/6   };
   
-  snakeHead head = new snakeHead ();
+  //snakeHead head = new snakeHead ();
   food food = new food ();
-  
-  ArrayList<snakeSegment> snake = new ArrayList<snakeSegment>();
+  ArrayList<snakeBody> snake = new ArrayList<snakeBody>();
   
   public game()
   {
-    snake.add(head);
+    snake.add(new snakeHead());
   }
   
   public void displayYesButton()
@@ -210,12 +209,8 @@ public class game
   
   public void increaseSnakeSize()
   {
-    snakeSize += 5;
-    
-    for(int i = 0; i < 5; i++)
-    {
-      snake.add(new snakeSegment());
-    }
+    snakeSize++;
+    snake.add(new snakeBody());
   }
   
   public void runGame()
@@ -224,20 +219,25 @@ public class game
     {
       delay(50);
       //snake.get(0).storePosition();
-      for(snakeSegment s : snake)
+      for(snakeBody s : snake)
       {
         s.storePosition();
       }
       snake.get(0).move();
-      for(snakeSegment s : snake)
+      for(snakeBody s : snake)
       {
         s.updatePosition();
       }
-      if(snake.get(0).foodCollision(food))
+      //if((snakeHead)(snake.get(0)).foodCollision(food))
+      if(snake.get(0) instanceof snakeHead)
       {
-        food.updatePos();
-        scoreIncrement();
-        increaseSnakeSize();
+        snakeHead head = (snakeHead) snake.get(0);
+        if(head.foodCollision(food))
+        {
+          food.updatePos();
+          scoreIncrement();
+          //increaseSnakeSize();
+        }
       }
       if(snake.get(0).wallCollision())
       {
@@ -245,10 +245,16 @@ public class game
       }
       refreshScreen();
       //snake.get(0).drawUnit();
-      for(snakeSegment s : snake)
+      for(snakeBody s : snake)
       {
         s.drawUnit();
       }
+      //if(snake.get(0) instanceof snakeBody)
+      //{
+      //  textSize(25);
+      //  fill(0);
+      //  text("Shit is not of snakeHead", 400, 400);
+      //}
       food.display();
       //one.debugShowPreviousPos();
       //food.debug();

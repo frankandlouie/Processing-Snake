@@ -299,7 +299,7 @@ class snakeHead extends snakeBody
   //  System.out.println("This is the head");
   //}
   
-  public void setHeadPos()
+  public snakeHead()
   {
     setXpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
     setYpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);

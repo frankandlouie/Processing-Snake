@@ -50,10 +50,14 @@ public class game
   public boolean detectYesButtonClicked()
   {
     boolean clicked = false; 
-    if((mouseX >= buttonXpos[0] && mouseX <= buttonXpos[0] + buttonWidth && mouseY >= buttonYpos[0] && mouseY <= buttonYpos[0] + buttonHeight))
+    if(keyPressed && key == 'y')
+    {
+      clicked = true;
+    }
+    else if((mouseX >= buttonXpos[0] && mouseX <= buttonXpos[0] + buttonWidth && mouseY >= buttonYpos[0] && mouseY <= buttonYpos[0] + buttonHeight))
     {
       yesBut = color(0, 255, 0);
-      if(mousePressed || (keyPressed && key == 'y'))
+      if(mousePressed)
       {
         clicked = true;
       }
@@ -69,10 +73,14 @@ public class game
   {
     
     boolean clicked = false; 
-    if((mouseX >= buttonXpos[1] && mouseX <= buttonXpos[1] + buttonWidth && mouseY >= buttonYpos[1] && mouseY <= buttonYpos[1] + buttonHeight))
+    if(keyPressed && key == 'n')
+    {
+      clicked = true;
+    }
+    else if((mouseX >= buttonXpos[1] && mouseX <= buttonXpos[1] + buttonWidth && mouseY >= buttonYpos[1] && mouseY <= buttonYpos[1] + buttonHeight))
     {
       noBut = color(255, 0, 0);
-      if(mousePressed || (keyPressed && key == 'n'))
+      if(mousePressed)
       {
         clicked = true;
       }

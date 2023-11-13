@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class game
 {
@@ -15,6 +15,8 @@ public class game
   private int [] buttonYpos =     {                    3*height/8           ,             3*height/8                   };
   private int [] buttonTextXpos = {      buttonXpos[0] + buttonWidth/4      ,       buttonXpos[1] + 5*buttonWidth/18   };
   private int [] buttonTextYpos = {      buttonYpos[0] + 5*buttonHeight/6   ,       buttonYpos[1] + 5*buttonHeight/6   };
+  private color noBut = color(255, 150, 150);
+  private color yesBut = color (150, 255, 150);
   
   //snakeHead head = new snakeHead ();
   food food = new food ();
@@ -27,7 +29,7 @@ public class game
   
   public void displayYesButton()
   {
-    fill(0, 255, 0);
+    fill(yesBut);
     rect(buttonXpos[0], buttonYpos[0], buttonWidth, buttonHeight);
     fill(0);
     textSize(75);
@@ -37,7 +39,7 @@ public class game
   
   public void displayNoButton()
   {
-    fill(255, 0, 0);
+    fill(noBut);
     rect(buttonXpos[1], buttonYpos[1], buttonWidth, buttonHeight);
     fill(0);
     textSize(75);
@@ -48,24 +50,37 @@ public class game
   public boolean detectYesButtonClicked()
   {
     boolean clicked = false; 
-    if(((mouseX >= buttonXpos[0] && mouseX <= buttonXpos[0] + buttonWidth && mouseY >= buttonYpos[0] && mouseY <= buttonYpos[0] + buttonHeight) && mousePressed) || (keyPressed && key == 'y'))
+    if((mouseX >= buttonXpos[0] && mouseX <= buttonXpos[0] + buttonWidth && mouseY >= buttonYpos[0] && mouseY <= buttonYpos[0] + buttonHeight))
     {
-      clicked = true;
-      //background(0);
+      yesBut = color(0, 255, 0);
+      if(mousePressed || (keyPressed && key == 'y'))
+      {
+        clicked = true;
+      }
     }
-    
+    else
+    {
+      yesBut = color(150, 255, 150);
+    }
     return clicked;
   }
   
   public boolean detectNoButtonClicked()
   {
-    boolean clicked = false; 
-    if(((mouseX >= buttonXpos[1] && mouseX <= buttonXpos[1] + buttonWidth && mouseY >= buttonYpos[1] && mouseY <= buttonYpos[1] + buttonHeight) && mousePressed) || (keyPressed && key == 'n'))
-    {
-      clicked = true;
-      background(0);
-    }
     
+    boolean clicked = false; 
+    if((mouseX >= buttonXpos[1] && mouseX <= buttonXpos[1] + buttonWidth && mouseY >= buttonYpos[1] && mouseY <= buttonYpos[1] + buttonHeight))
+    {
+      noBut = color(255, 0, 0);
+      if(mousePressed || (keyPressed && key == 'n'))
+      {
+        clicked = true;
+      }
+    }
+    else
+    {
+      noBut = color(255, 150, 150);
+    }
     return clicked;
   }
   
@@ -80,7 +95,7 @@ public class game
     textAlign(CENTER);
     stroke(10);
     text("Game Over!", width/2, width/4);
-    fill(64);
+    fill(32);
     textSize(50);
     text("Play again?", width/2, 3*width/8);
   }
@@ -218,7 +233,6 @@ public class game
     if(!gameLost)
     {
       delay(50);
-      //snake.get(0).storePosition();
       for(snakeBody s : snake)
       {
         s.storePosition();
@@ -273,6 +287,7 @@ public class game
       {
         gameLost = false;
         resetScore();
+        food.updatePos();
         snake.get(0).resetSnake();
         snake.get(0).resetVelocity();
       }

@@ -5,14 +5,14 @@ public class snakeBody
 {
   Random rand = new Random();
   
-  private int height = 700, width = 700;
-  private int squareSize = 25;
-  private color snakeColor = color(255, 0, 0);
-  private int xpos;
-  private int ypos; // = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-  private int tempX;
-  private int tempY;
-  private char direction;
+  /*private*/ int height = 700, width = 700;
+  /*private*/ int squareSize = 25;
+  /*private*/ color snakeColor = color(255, 0, 0);
+  /*private*/ int xpos;
+  /*private*/ int ypos; // = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+  /*private*/ int tempX;
+  /*private*/ int tempY;
+  /*private*/ char direction;
   //int snakeSize = 1;
   //private int [] squareCenter = {(int)(xpos + (squareSize / 2) + 0.5), (int)(ypos + (squareSize / 2) + 0.5)};
   
@@ -290,13 +290,19 @@ public class snakeBody
 
 class snakeHead extends snakeBody
 {
-  private int squareSize = 25;
-  private int xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-  private int ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;  
+  //squareSize = 25;
+  //xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+  //ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;  
   
-  public void poo()
+  //public void poo()
+  //{
+  //  System.out.println("This is the head");
+  //}
+  
+  public void setHeadPos()
   {
-    System.out.println("This is the head");
+    setXpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
+    setYpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
   }
   
   public boolean foodCollision(food f)

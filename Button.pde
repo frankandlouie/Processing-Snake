@@ -6,24 +6,23 @@ public class Button
   private float height = 0;
   private float xPos = 0;
   private float yPos = 0;
+  private float xTextPos;
+  private float yTextPos;
   private String text = " ";
-  private int textSize = 30;
-  private int colorR = 0;
-  private int colorG = 0;
-  private int colorB = 0;
   private color currentColor; 
   private color butColor;
   private color darkenColor;
   
-  public Button(float width, float height, float xPos, float yPos, int textSize, int R, int G, int B)
+  public Button(float width, float height, float xPos, float yPos, int R, int G, int B, String buttonText)
   {
     this.width = width;
     this.height = height;
     this.xPos = xPos;
     this.yPos = yPos;
-    this.textSize = textSize;
+    //this.textSize = textSize;
     butColor = color(R, G, B);
     darkenColor = butColor;
+    text = buttonText;
     
     if(R == 0 && G == 0)
     {
@@ -45,6 +44,10 @@ public class Button
   {
     fill(currentColor);
     rect(xPos, yPos, this.width, this.height);
+    fill(0);
+    textSize(this.height);
+    textAlign(CENTER);
+    text(text, xPos + this.width/2, yPos + 13 * this.height/16); // + 5 * this.height/6);
   }
   
   public boolean mouseHoveringOverButton()
@@ -87,5 +90,13 @@ public class Button
   public void restoreButton()
   {
     currentColor = butColor;
+  }
+  
+  public void setTextPos()
+  {
+    float textAscent = textAscent();
+    float textDescent = textDescent();
+    
+    yTextPos = (height - textAscent - textDescent) / 2 + textAscent;
   }
 }

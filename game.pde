@@ -15,12 +15,12 @@ public class game
   private int [] buttonYpos =     {                    3*height/8           ,             3*height/8                   };
   private int [] buttonTextXpos = {      buttonXpos[0] + buttonWidth/4      ,       buttonXpos[1] + 5*buttonWidth/18   };
   private int [] buttonTextYpos = {      buttonYpos[0] + 5*buttonHeight/6   ,       buttonYpos[1] + 5*buttonHeight/6   };
-  private color noBut = color(255, 150, 150);
-  private color yesBut = color (150, 255, 150);
   
-  Button yes = new Button(200, 75, ((700/2)-(200/2)-(5*200/8)), (3*900/8), 75, 0, 255, 0);
-  Button no = new Button(200, 75, ((700/2)-(200/2)+(5*200/8)), (3*900/8), 75, 255, 0, 0);
+  Button yes = new Button(buttonWidth, buttonHeight, buttonXpos[0], buttonYpos[0], 0, 255, 0, "YES");
+  Button no = new Button(buttonWidth, buttonHeight, buttonXpos[1], buttonYpos[1], 255, 0, 0, "NO");
   
+  
+
   //snakeHead head = new snakeHead ();
   food food = new food ();
   ArrayList<snakeBody> snake = new ArrayList<snakeBody>();

@@ -18,6 +18,8 @@ public class game
   private color noBut = color(255, 150, 150);
   private color yesBut = color (150, 255, 150);
   
+  Button yes = new Button(200, 75, (700/2)-(200/2)-(5*200/8), (3*900/8), 75, 150, 255, 150);
+  
   //snakeHead head = new snakeHead ();
   food food = new food ();
   ArrayList<snakeBody> snake = new ArrayList<snakeBody>();
@@ -289,15 +291,30 @@ public class game
     else
     {
       lossScreen();
-      displayYesButton();
+      //displayYesButton();
+      yes.drawButton();
       displayNoButton();
-      if(detectYesButtonClicked())
+      if(yes.keyboardButtonClicked())
       {
         gameLost = false;
         resetScore();
         food.updatePos();
         snake.get(0).resetSnake();
         snake.get(0).resetVelocity();
+      }
+      else if(yes.mouseHoveringOverButton())
+      {
+        yes.darkenButton();
+        if(yes.buttonClicked())
+        {
+          gameLost = false;
+          resetScore();
+          food.updatePos();
+          snake.get(0).resetSnake();
+          snake.get(0).resetVelocity();
+        }
+        yes.restoreButton();
+        yes.drawButton();
       }
       if(detectNoButtonClicked())
       {

@@ -14,7 +14,6 @@ public class Button
   private color currentColor; 
   private color butColor;
   private color darkenColor;
-
   
   public Button(float width, float height, float xPos, float yPos, int textSize, int R, int G, int B)
   {
@@ -24,20 +23,22 @@ public class Button
     this.yPos = yPos;
     this.textSize = textSize;
     butColor = color(R, G, B);
-    currentColor = butColor;
+    darkenColor = butColor;
     
-    if(R == 150)
+    if(R == 0 && G == 0)
     {
-      darkenColor = color(0, G, B);
+      butColor = color(150, 150, B);
     }
-    if(G == 150)
+    if(G == 0 && B == 0)
     {
-      darkenColor = color(R, 0, B);
+      butColor = color(R, 150, 150);
     }
-    if(B == 150)
+    if(R == 0 && B == 0)
     {
-      darkenColor = color(R, G, 0);
+      butColor = color(150, G, 150);
     }
+    
+    currentColor = butColor;
   }
   
   public void drawButton()
@@ -53,6 +54,7 @@ public class Button
     {
       isHovering = true;
     }
+    
     return isHovering;
   }
   
@@ -66,14 +68,15 @@ public class Button
     return clicked;
   }
   
-  public boolean keyboardButtonClicked()
+  public boolean keyboardButtonClicked(char c)
   {
     boolean pressed = false; 
-     if(keyPressed && key == 'y')
-     {
-       pressed = true;
-     }
-     return pressed;
+    if(keyPressed && key == c)
+    {
+      pressed = true;
+    }
+    
+    return pressed;
   }
   
   public void darkenButton()

@@ -28,6 +28,7 @@ public class snakeBody
   {
     xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
     ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    resetVelocity();
     setColorIB();
   }
 

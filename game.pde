@@ -18,7 +18,8 @@ public class game
   private color noBut = color(255, 150, 150);
   private color yesBut = color (150, 255, 150);
   
-  Button yes = new Button(200, 75, (700/2)-(200/2)-(5*200/8), (3*900/8), 75, 150, 255, 150);
+  Button yes = new Button(200, 75, ((700/2)-(200/2)-(5*200/8)), (3*900/8), 75, 0, 255, 0);
+  Button no = new Button(200, 75, ((700/2)-(200/2)+(5*200/8)), (3*900/8), 75, 255, 0, 0);
   
   //snakeHead head = new snakeHead ();
   food food = new food ();
@@ -232,6 +233,13 @@ public class game
     text("[" + (xpos - squareSize) + ", " + (ypos - squareSize)+ "]", 185, 850);
   }
   
+  public void resetGame()
+  {
+    resetScore();
+    food.updatePos();
+    snake.get(0).resetSnake();
+  }
+  
   public void increaseSnakeSize()
   {
     snakeSize++;
@@ -252,7 +260,6 @@ public class game
       {
         s.updatePosition();
       }
-      //if((snakeHead)(snake.get(0)).foodCollision(food))
       if(snake.get(0) instanceof snakeHead)
       {
         snakeHead head = (snakeHead) snake.get(0);
@@ -268,58 +275,47 @@ public class game
         gameLost = true;
       }
       refreshScreen();
-      //snake.get(0).drawUnit();
       for(snakeBody s : snake)
       {
         s.drawUnit();
       }
-      //if(snake.get(0) instanceof snakeBody)
-      //{
-      //  textSize(25);
-      //  fill(0);
-      //  text("Shit is not of snakeHead", 400, 400);
-      //}
       food.display();
-      //one.debugShowPreviousPos();
-      //food.debug();
       showSnakePos();
       showFoodPos();
-      //one.getDirection();
       displayScore();
       displayDirection();
     }
     else
     {
       lossScreen();
-      //displayYesButton();
-      yes.drawButton();
-      displayNoButton();
-      if(yes.keyboardButtonClicked())
+      if (yes.keyboardButtonClicked('y') || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
       {
         gameLost = false;
-        resetScore();
-        food.updatePos();
-        snake.get(0).resetSnake();
-        snake.get(0).resetVelocity();
-      }
-      else if(yes.mouseHoveringOverButton())
+        resetGame();
+      } 
+      else if (yes.mouseHoveringOverButton()) 
       {
         yes.darkenButton();
-        if(yes.buttonClicked())
-        {
-          gameLost = false;
-          resetScore();
-          food.updatePos();
-          snake.get(0).resetSnake();
-          snake.get(0).resetVelocity();
-        }
+      } 
+      else 
+      {
         yes.restoreButton();
-        yes.drawButton();
       }
-      if(detectNoButtonClicked())
+      
+      if(no.keyboardButtonClicked('n') || (no.mouseHoveringOverButton() && no.buttonClicked()))
       {
         exit();
       }
+      else if (no.mouseHoveringOverButton())
+      {
+        no.darkenButton();
+      }
+      else
+      {
+        no.restoreButton();
+      }
+      yes.drawButton();
+      no.drawButton();
     }
   }
 }

@@ -12,11 +12,11 @@ public class snakeBody
   /*private*/ int ypos; // = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   /*private*/ int tempX;
   /*private*/ int tempY;
-  /*private*/ char direction;
+  /*private char direction;*/
   //int snakeSize = 1;
   //private int [] squareCenter = {(int)(xpos + (squareSize / 2) + 0.5), (int)(ypos + (squareSize / 2) + 0.5)};
   
-  private char move;
+  //private char move;
   
   //Index [0] = X coord, [1] = Y coord, [2] = Previous X, [3] = Previous Y
   /*private*/ int [] topLeftCorner = new int[4];
@@ -24,13 +24,7 @@ public class snakeBody
   /*private*/ int [] bottomLeftCorner = new int[4];
   /*private*/ int [] bottomRightCorner = new int[4];
   
-  public void resetSnake()
-  {
-    xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-    ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-    resetVelocity();
-    setColorIB();
-  }
+  
 
   public void setXpos(int xpos)
   {
@@ -116,26 +110,24 @@ public class snakeBody
     fill(snakeColor);
     square(xpos, ypos, squareSize);
   }
+}
+
+class snakeHead extends snakeBody
+{
+  private char direction;
+  private char move;
   
-  public void setColorOOB() //out of bounds
+  public snakeHead()
   {
-    snakeColor = color(255);
-  }
-  
-  public void setColorIB() //in bounds
-  {
-    snakeColor = color(255, 0, 0);
+    setXpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
+    setYpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
   }
   
   public void moveRight()
   {
     if((keyPressed && key == 'd'))// || (key == CODED && keyCode == RIGHT))
     {
-      if(xpos != width - squareSize)
-      {
-        //xpos += squareSize;
-        move = 'e';
-      }
+      move = 'e';
     }
   }
   
@@ -143,11 +135,7 @@ public class snakeBody
   {
     if(keyPressed && key == 'a')// || (key == CODED && keyCode == LEFT)))
     {
-      if(xpos != 0)
-      {
-        //xpos -= squareSize;
-        move = 'w';
-      }
+      move = 'w';
     }
   }
   
@@ -155,11 +143,7 @@ public class snakeBody
   {
     if(keyPressed && key == 'w')// || (key == CODED && keyCode == UP))
     {
-      if(ypos != 0)
-      {
-        //ypos -= squareSize;
-        move = 'n';
-      }
+      move = 'n';
     }
   }
   
@@ -167,12 +151,23 @@ public class snakeBody
   {
     if(keyPressed && key == 's')// || (key == CODED && keyCode == DOWN))
     {
-      if(ypos != height - squareSize)
-      {
-        //ypos += squareSize;
-        move = 's';
-      }
+      move = 's';
     }
+  }  
+  
+  public boolean wallCollision()
+  {
+    boolean crashed = false; 
+    
+    if((topLeftCorner[1] == 0 && getDirection() == 'n') || 
+       (topLeftCorner[0] == 0 && getDirection() == 'w') ||
+       (bottomRightCorner[1] == height && getDirection() == 's') ||
+       (bottomRightCorner[0] == width && getDirection() == 'e'))
+    {
+      crashed = true;
+    }
+    
+    return crashed;
   }
   
   public void move()
@@ -231,28 +226,6 @@ public class snakeBody
     }
   }
   
-  void resetVelocity()
-  {
-    move = ' ';
-  }
-  
-  
-  
-  public boolean wallCollision()
-  {
-    boolean crashed = false; 
-    
-    if((topLeftCorner[1] == 0 && getDirection() == 'n') || 
-       (topLeftCorner[0] == 0 && getDirection() == 'w') ||
-       (bottomRightCorner[1] == height && getDirection() == 's') ||
-       (bottomRightCorner[0] == width && getDirection() == 'e'))
-    {
-      crashed = true;
-    }
-    
-    return crashed;
-  }
-  
   public char getDirection()
   {
     textSize(50);
@@ -280,30 +253,27 @@ public class snakeBody
     return direction;
   }
   
-  //public void startMenu()
-  //{
-  //  background(78, 106, 84);
-  //  fill(255);
-  //  textSize(100);
-  //  text("SNAKE", width/75, height/6);
-  //}  
-}
-
-class snakeHead extends snakeBody
-{
-  //squareSize = 25;
-  //xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-  //ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;  
-  
-  //public void poo()
-  //{
-  //  System.out.println("This is the head");
-  //}
-  
-  public snakeHead()
+  void resetVelocity()
   {
-    setXpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
-    setYpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
+    move = ' ';
+  }
+  
+  public void setColorOOB() //out of bounds
+  {
+    snakeColor = color(255);
+  }
+  
+  public void setColorIB() //in bounds
+  {
+    snakeColor = color(255, 0, 0);
+  }
+  
+  public void reset()
+  {
+    xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    resetVelocity();
+    setColorIB();
   }
   
   public boolean foodCollision(food f)

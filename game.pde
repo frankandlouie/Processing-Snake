@@ -32,10 +32,14 @@ public class game
   
   public void lossScreen()
   {
+    snakeHead head = (snakeHead)snake.get(0);
     drawArena();
-    snake.get(0).drawSnake(snake.get(0).getXpos(), snake.get(0).getYpos());
+    for(snakeBody s : snake)
+    {
+      s.drawUnit();
+    }
     food.redrawFood(food.getXpos(), food.getYpos());
-    snake.get(0).setColorOOB();
+    head.setColorOOB();
     fill(0);
     textSize(100);
     textAlign(CENTER);
@@ -119,7 +123,13 @@ public class game
   
   public void displayDirection()
   {
-    char direction = snake.get(0).getDirection();
+    char direction = ' ';
+    
+    if(snake.get(0) instanceof snakeHead)
+    {
+      snakeHead head = (snakeHead)snake.get(0);
+      direction = head.getDirection();
+    }  
     
     textSize(25);
     fill(0);
@@ -168,11 +178,20 @@ public class game
     text("[" + (xpos - squareSize) + ", " + (ypos - squareSize)+ "]", 185, 850);
   }
   
-  public void resetGame()
+  private void showHUD()
+  {
+    showSnakePos();
+    showFoodPos();
+    displayScore();
+    displayDirection();
+  }
+  
+  public void resetGame(snakeHead head)
   {
     resetScore();
     food.updatePos();
-    snake.get(0).resetSnake();
+    head.reset();
+    resetSnakeSize();
   }
   
   public void increaseSnakeSize()
@@ -181,8 +200,18 @@ public class game
     snake.add(new snakeBody());
   }
   
+  public void resetSnakeSize()
+  {
+    snakeSize = 0;
+    for(int i = 1; i < snake.size(); i++)
+    {
+      snake.remove(i);
+    }
+  }
+  
   public void runGame()
   {
+    snakeHead head = (snakeHead)snake.get(0);
     if(!gameLost)
     {
       delay(50);
@@ -190,35 +219,30 @@ public class game
       {
         s.storePosition();
       }
-      snake.get(0).move();
+      head.move();
       for(snakeBody s : snake)
       {
         s.updatePosition();
       }
-      if(snake.get(0) instanceof snakeHead)
+      if(head.foodCollision(food))
       {
-        snakeHead head = (snakeHead) snake.get(0);
-        if(head.foodCollision(food))
-        {
-          food.updatePos();
-          scoreIncrement();
-          //increaseSnakeSize();
-        }
+        food.updatePos();
+        scoreIncrement();
+        increaseSnakeSize();
       }
-      if(snake.get(0).wallCollision())
+      if(head.wallCollision())
       {
         gameLost = true;
       }
+      
       refreshScreen();
+      
       for(snakeBody s : snake)
       {
         s.drawUnit();
       }
       food.display();
-      showSnakePos();
-      showFoodPos();
-      displayScore();
-      displayDirection();
+      showHUD();
     }
     else
     {
@@ -226,7 +250,7 @@ public class game
       if (yes.keyboardButtonClicked('y') || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
       {
         gameLost = false;
-        resetGame();
+        resetGame(head);
       } 
       else if (yes.mouseHoveringOverButton()) 
       {
@@ -236,7 +260,6 @@ public class game
       {
         yes.restoreButton();
       }
-      
       if(no.keyboardButtonClicked('n') || (no.mouseHoveringOverButton() && no.buttonClicked()))
       {
         exit();

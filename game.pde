@@ -18,8 +18,6 @@ public class game
   
   Button yes = new Button(buttonWidth, buttonHeight, buttonXpos[0], buttonYpos[0], 0, 255, 0, "YES");
   Button no = new Button(buttonWidth, buttonHeight, buttonXpos[1], buttonYpos[1], 255, 0, 0, "NO");
-  
-  
 
   //snakeHead head = new snakeHead ();
   food food = new food ();
@@ -38,7 +36,7 @@ public class game
     {
       s.drawUnit();
     }
-    food.redrawFood(food.getXpos(), food.getYpos());
+    food.display(food.getXpos(), food.getYpos());
     head.setColorOOB();
     fill(0);
     textSize(100);
@@ -60,7 +58,7 @@ public class game
     square(0 + squareSize, 0 + squareSize, inBounds);
   }
   
-  public void drawHUD()
+  public void drawHUDframe()
   {
     //Score area
     fill(196);
@@ -79,7 +77,8 @@ public class game
   public void drawScreenFrame()
   {
     drawArena();
-    drawHUD();
+    drawHUDframe();
+    showHUD();
   }
   
   public void refreshScreen()
@@ -118,21 +117,27 @@ public class game
   {
     fill(0);
     textSize(25);
-    text("Score: " + score, 500, 800);
+    textAlign(BASELINE);
+    text("Score: " + score, 500, 775);
+  }
+  
+  public void displaySize()
+  {
+    fill(0);
+    textSize(25);
+    textAlign(BASELINE);
+    text("Size: " + snakeSize, 500, 825);
   }
   
   public void displayDirection()
   {
-    char direction = ' ';
+    snakeHead head = (snakeHead)snake.get(0);
     
-    if(snake.get(0) instanceof snakeHead)
-    {
-      snakeHead head = (snakeHead)snake.get(0);
-      direction = head.getDirection();
-    }  
+    char direction = head.getDirection();
     
-    textSize(25);
     fill(0);
+    textSize(25);
+    textAlign(BASELINE);
     text("Direction", 10, 725);
     if(direction == 'n')
     {
@@ -175,6 +180,7 @@ public class game
     fill(0);
     circle(200, 775, 5);
     textSize(20);
+    textAlign(BASELINE);
     text("[" + (xpos - squareSize) + ", " + (ypos - squareSize)+ "]", 185, 850);
   }
   
@@ -183,6 +189,7 @@ public class game
     showSnakePos();
     showFoodPos();
     displayScore();
+    displaySize();
     displayDirection();
   }
   
@@ -192,20 +199,32 @@ public class game
     food.updatePos();
     head.reset();
     resetSnakeSize();
+    refreshScreen();
   }
   
   public void increaseSnakeSize()
   {
-    snakeSize++;
-    snake.add(new snakeBody());
+    long seed = System.currentTimeMillis();
+    Random random = new Random(seed);
+    
+    int randomInt = random.nextInt(5) + 1;
+    for(int i = 0; i < randomInt; i++)
+    {
+      snakeSize++;
+      snake.add(new snakeBody());
+    }
   }
   
   public void resetSnakeSize()
   {
     snakeSize = 0;
-    for(int i = 1; i < snake.size(); i++)
+    if (snake.size() > 1) 
     {
-      snake.remove(i);
+      // Create a sublist from index 1 to the end
+      List<snakeBody> bodySublist = snake.subList(1, snake.size());
+  
+      // Clear the sublist
+      bodySublist.clear();
     }
   }
   
@@ -215,14 +234,21 @@ public class game
     if(!gameLost)
     {
       delay(50);
+      head.storePosition();
       for(snakeBody s : snake)
       {
         s.storePosition();
       }
       head.move();
-      for(snakeBody s : snake)
+      //for(snakeBody s : snake)
+      //{
+      //  s.updatePosition();
+      //}
+      head.updatePosition();
+      for (int i = snake.size() - 1; i > 0; i--) 
       {
-        s.updatePosition();
+        snake.get(i).setXpos(snake.get(i-1).getPreviousXpos());
+        snake.get(i).setYpos(snake.get(i-1).getPreviousYpos());
       }
       if(head.foodCollision(food))
       {
@@ -242,7 +268,6 @@ public class game
         s.drawUnit();
       }
       food.display();
-      showHUD();
     }
     else
     {

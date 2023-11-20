@@ -8,8 +8,8 @@ public class snakeBody
   /*private*/ int height = 700, width = 700;
   /*private*/ int squareSize = 25;
   /*private*/ color snakeColor = color(255, 0, 0);
-  /*private*/ int xpos;
-  /*private*/ int ypos; // = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+  /*private*/ int xpos = -25;
+  /*private*/ int ypos = -25; // = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   /*private*/ int tempX;
   /*private*/ int tempY;
   /*private char direction;*/
@@ -24,7 +24,13 @@ public class snakeBody
   /*private*/ int [] bottomLeftCorner = new int[4];
   /*private*/ int [] bottomRightCorner = new int[4];
   
-  
+  public snakeBody(){}
+
+  public snakeBody(int xpos, int ypos)
+  {
+    this.xpos = xpos;
+    this.ypos = ypos;
+  }
 
   public void setXpos(int xpos)
   {
@@ -44,6 +50,16 @@ public class snakeBody
   public int getYpos()
   {
     return ypos;
+  }
+  
+  public int getPreviousXpos()
+  {
+    return topLeftCorner[2];
+  }
+  
+  public int getPreviousYpos()
+  {
+    return topLeftCorner[3];
   }
   
   public void drawSnake(int xpos, int ypos)
@@ -79,6 +95,24 @@ public class snakeBody
     bottomRightCorner[1] = ypos + squareSize;
   }
   
+  public void updatePosition(int xpos, int ypos)
+  {
+    topLeftCorner[0] = xpos;
+    topLeftCorner[1] = ypos;
+    topRightCorner[0] = xpos + squareSize;
+    topRightCorner[1] = ypos;
+    bottomLeftCorner[0] = xpos;
+    bottomLeftCorner[1] = ypos + squareSize;
+    bottomRightCorner[0] = xpos + squareSize;
+    bottomRightCorner[1] = ypos + squareSize;
+  }
+  
+  public void setPos(int x, int y)
+  {
+    xpos = x;
+    ypos = y;
+  }
+  
   //public void debugShowCurrentPos()
   //{
   //  fill(255, 0, 0);
@@ -104,7 +138,7 @@ public class snakeBody
   //  text("(" + bottomRightCorner[2]+", " + bottomRightCorner[3] + ")", 600, 625);
   //  text("Previous\nPos", 530, 550);
   //}
-  
+    
   public void drawUnit()
   {
     fill(snakeColor);
@@ -114,8 +148,11 @@ public class snakeBody
 
 class snakeHead extends snakeBody
 {
+  //private int xpos, ypos, tempX, tempY;
+  //private int squareSize = 25;
   private char direction;
   private char move;
+  //private color snakeColor;
   
   public snakeHead()
   {

@@ -36,7 +36,7 @@ public class food
     return ypos;
   }
   
-  public void redrawFood(int xpos, int ypos)
+  public void display(int xpos, int ypos)
   {
     fill(foodColor);
     square(xpos, ypos, squareSize);

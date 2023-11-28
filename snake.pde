@@ -62,6 +62,46 @@ public class snakeBody
     return topLeftCorner[3];
   }
   
+  public int getTopLeftCornerX()
+  {
+    return topLeftCorner[0];
+  }
+  
+  public int getTopLeftCornerY()
+  {
+    return topLeftCorner[1];
+  }
+  
+  public int getTopRightCornerX()
+  {
+    return topRightCorner[0];
+  }
+  
+  public int getTopRightCornerY()
+  {
+    return topRightCorner[1];
+  }
+  
+  public int getBottomLeftCornerX()
+  {
+    return bottomLeftCorner[0];
+  }
+  
+  public int getBottomLeftCornerY()
+  {
+    return bottomLeftCorner[1];
+  }
+  
+  public int getBottomRightCornerX()
+  {
+    return bottomRightCorner[0];
+  }
+  
+  public int getBottomRightCornerY()
+  {
+    return bottomRightCorner[1];
+  }
+  
   public void drawSnake(int xpos, int ypos)
   {
     fill(snakeColor);
@@ -202,6 +242,7 @@ class snakeHead extends snakeBody
        (bottomRightCorner[0] == width && getDirection() == 'e'))
     {
       crashed = true;
+      System.out.println("died");
     }
     
     return crashed;
@@ -295,7 +336,7 @@ class snakeHead extends snakeBody
     move = ' ';
   }
   
-  public void setColorOOB() //out of bounds
+  public void setColorWhite() //out of bounds
   {
     snakeColor = color(255);
   }
@@ -317,21 +358,32 @@ class snakeHead extends snakeBody
   {
     boolean eaten = false; 
     
-    if(topLeftCorner[0] == f.getTopLeftCornerX() && topLeftCorner[1] == f.getTopLeftCornerY())
+    if(getXpos() == f.getXpos() && getYpos() == f.getYpos())
     {
-      if(topRightCorner[0] == f.getTopRightCornerX() && topRightCorner[1] == f.getTopRightCornerY())
-      {
-        if(bottomLeftCorner[0] == f.getBottomLeftCornerX() && bottomLeftCorner[1] == f.getBottomLeftCornerY())
-        {
-          if(bottomRightCorner[0] == f.getBottomRightCornerX() && bottomRightCorner[1] == f.getBottomRightCornerY())
-          {
-            textSize(50);
-            text("Food eaten", 400, 400);
-            eaten = true;
-          }
-        }
-      }
+      System.out.println("Food eaten )");
+      eaten = true;
     }
     return eaten;
+  }
+  
+  //public boolean selfCollision(ArrayList <snakeBody> snake)
+  public boolean selfCollision(snakeBody s)
+
+  {
+    boolean collided = false;
+      
+    // Create a sublist from index 1 to the end
+    //List<snakeBody> bodySublist = snake.subList(1, snake.size());
+    
+    //for(snakeBody s : bodySublist)
+    //{
+    if(getXpos() == s.getXpos() && getYpos() == s.getYpos())
+    {
+      collided = true;
+      System.out.println("hit himself (");
+    }
+    //}
+    
+    return collided;
   }
 }

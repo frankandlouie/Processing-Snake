@@ -30,14 +30,18 @@ public class game
   
   public void lossScreen()
   {
+    List<snakeBody> bodySublist = snake.subList(1, snake.size());
     snakeHead head = (snakeHead)snake.get(0);
+
     drawArena();
-    for(snakeBody s : snake)
+    for(snakeBody s : bodySublist)
     {
       s.drawUnit();
     }
     food.display(food.getXpos(), food.getYpos());
-    head.setColorOOB();
+    head.setColorWhite();
+    head.drawSnake(head.getXpos(), head.getYpos());
+    
     fill(0);
     textSize(100);
     textAlign(CENTER);
@@ -46,6 +50,8 @@ public class game
     fill(32);
     textSize(50);
     text("Play again?", width/2, 3*width/8);
+    
+    
   }
   
   public void drawArena()
@@ -255,6 +261,17 @@ public class game
         food.updatePos();
         scoreIncrement();
         increaseSnakeSize();
+      }
+      if(snake.size() > 5)
+      {
+        List<snakeBody> bodySublist = snake.subList(1, snake.size());
+        for(snakeBody s : bodySublist)
+        {
+          if(head.selfCollision(s))
+          {
+            gameLost = true;
+          }
+        }
       }
       if(head.wallCollision())
       {

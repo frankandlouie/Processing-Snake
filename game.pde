@@ -4,7 +4,7 @@ public class game
 {
   private int width = 700, borderHeight = 700, inBounds = 650, height = 900;
   private int squareSize = 25;
-  private int score = 0;
+  private int bestSize = 0;
   private int snakeSize = 1;
   private boolean gameLost = false;
   
@@ -92,15 +92,23 @@ public class game
     drawScreenFrame();
   }
   
-  public void scoreIncrement()
+  //public void scoreIncrement()
+  //{
+  //  score++;
+  //}
+  
+  public void bestSizeCalculator()
   {
-    score++;
+    if(snakeSize > bestSize)
+    {
+      bestSize = snakeSize;
+    }
   }
   
-  public void resetScore()
-  {
-    score = 0 ;
-  }
+  //public void resetScore()
+  //{
+  //  score = 0 ;
+  //}
   
   //public void loseGame()
   //{
@@ -119,12 +127,20 @@ public class game
   //  //}
   //}
   
-  public void displayScore()
+  //public void displayScore()
+  //{
+  //  fill(0);
+  //  textSize(25);
+  //  textAlign(BASELINE);
+  //  text("Score: " + score, 500, 775);
+  //}
+  
+  public void displayBestSize()
   {
     fill(0);
     textSize(25);
     textAlign(BASELINE);
-    text("Score: " + score, 500, 775);
+    text("Best: " + bestSize, 500, 825);
   }
   
   public void displaySize()
@@ -132,7 +148,7 @@ public class game
     fill(0);
     textSize(25);
     textAlign(BASELINE);
-    text("Size: " + snakeSize, 500, 825);
+    text("Size: " + snakeSize, 500, 775);
   }
   
   public void displayDirection()
@@ -161,6 +177,8 @@ public class game
     {
       text("Heading\nWest", 25, 775);
     }
+    else
+    {}
   }
   
   public void showFoodPos()
@@ -194,14 +212,15 @@ public class game
   {
     showSnakePos();
     showFoodPos();
-    displayScore();
+    displayBestSize();
     displaySize();
     displayDirection();
   }
   
   public void resetGame(snakeHead head)
   {
-    resetScore();
+    //resetScore();
+    snakeSize = 1;
     food.updatePos();
     head.reset();
     resetSnakeSize();
@@ -210,11 +229,7 @@ public class game
   
   public void increaseSnakeSize()
   {
-    long seed = System.currentTimeMillis();
-    Random random = new Random(seed);
-    
-    int randomInt = random.nextInt(5) + 1;
-    for(int i = 0; i < randomInt; i++)
+    for(int i = 0; i < 4; i++)
     {
       snakeSize++;
       snake.add(new snakeBody());
@@ -223,15 +238,11 @@ public class game
   
   public void resetSnakeSize()
   {
-    snakeSize = 0;
-    if (snake.size() > 1) 
-    {
-      // Create a sublist from index 1 to the end
-      List<snakeBody> bodySublist = snake.subList(1, snake.size());
-  
-      // Clear the sublist
-      bodySublist.clear();
-    }
+    // Create a sublist from index 1 to the end
+    List<snakeBody> bodySublist = snake.subList(1, snake.size());
+
+    // Clear the sublist
+    bodySublist.clear();
   }
   
   public void runGame()
@@ -259,7 +270,7 @@ public class game
       if(head.foodCollision(food))
       {
         food.updatePos();
-        scoreIncrement();
+        //scoreIncrement();
         increaseSnakeSize();
       }
       if(snake.size() > 5)
@@ -288,6 +299,7 @@ public class game
     }
     else
     {
+      bestSizeCalculator();
       lossScreen();
       if (yes.keyboardButtonClicked('y') || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
       {

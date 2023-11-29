@@ -300,8 +300,7 @@ class snakeHead extends snakeBody
       }
     }
     if(move == ' ')
-    {
-    }
+    {}
   }
   
   public char getDirection()
@@ -327,6 +326,10 @@ class snakeHead extends snakeBody
       //text("Traveling North", 5, 45);
       direction = 'n';
     }
+    //if(xpos == tempX && ypos == tempY)
+    //{
+    //  direction = ' ';
+    //}
     
     return direction;
   }

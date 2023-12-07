@@ -27,6 +27,7 @@ public class game
   //snakeHead head = new snakeHead ();
   food food = new food ();
   ArrayList<snakeBody> snake = new ArrayList<snakeBody>();
+  theme themes = new theme();
   
   public game()
   {

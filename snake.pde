@@ -8,6 +8,9 @@ public class snakeBody
   /*private*/ int height = 700, width = 700;
   /*private*/ int squareSize = 25;
   /*private*/ color snakeColor = color(255, 0, 0);
+  /*private*/ color activeColor = snakeColor;
+
+
   /*private*/ int xpos = -25;
   /*private*/ int ypos = -25; // = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   /*private*/ int tempX;
@@ -50,6 +53,11 @@ public class snakeBody
   public int getYpos()
   {
     return ypos;
+  }
+  
+  public color getSnakeColor()
+  {
+    return snakeColor;
   }
   
   public int getPreviousXpos()
@@ -104,7 +112,7 @@ public class snakeBody
   
   public void drawSnake(int xpos, int ypos)
   {
-    fill(snakeColor);
+    fill(activeColor);
     square(xpos, ypos, squareSize);
   }
 
@@ -181,7 +189,7 @@ public class snakeBody
     
   public void drawUnit()
   {
-    fill(snakeColor);
+    fill(activeColor);
     square(xpos, ypos, squareSize);
   }
 }
@@ -341,12 +349,12 @@ class snakeHead extends snakeBody
   
   public void setColorWhite() //out of bounds
   {
-    snakeColor = color(255);
+    activeColor = color(255);
   }
   
   public void setColorIB() //in bounds
   {
-    snakeColor = color(255, 0, 0);
+    activeColor = snakeColor;
   }
   
   public void reset()

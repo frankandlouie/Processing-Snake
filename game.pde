@@ -2,11 +2,16 @@ import java.util.*;
 
 public class game
 {
-  private int width = 700, borderHeight = 700, inBounds = 650, height = 900;
+  //private int width = 700, borderHeight = 700, inBounds = 650, height = 900;
+  private int width = 700, height = 900;
+  
   private int squareSize = 25;
   private int bestSize = 0;
   private int snakeSize = 1;
   private boolean gameLost = false;
+  
+  private int borderHeight = width;
+  private int inBounds = width - squareSize * 2;
   
   private int buttonWidth = 200;
   private int buttonHeight = 75;
@@ -50,8 +55,6 @@ public class game
     fill(32);
     textSize(50);
     text("Play again?", width/2, 3*width/8);
-    
-    
   }
   
   public void drawArena()
@@ -186,7 +189,7 @@ public class game
     int xpos = food.getXpos();
     int ypos = food.getYpos();
     
-    fill(225, 255, 32);
+    fill(food.getFoodColor());
     square(315, 775, 50);
     fill(0);
     circle(315, 775, 5);
@@ -199,7 +202,7 @@ public class game
     int xpos = snake.get(0).getXpos();
     int ypos = snake.get(0).getYpos();
     
-    fill(255, 0, 0);
+    fill(snake.get(0).getSnakeColor());
     square(200, 775, 50);
     fill(0);
     circle(200, 775, 5);
@@ -269,7 +272,10 @@ public class game
       }
       if(head.foodCollision(food))
       {
-        food.updatePos();
+        for(snakeBody s : snake)
+        {
+          food.updatePos(s);
+        }
         //scoreIncrement();
         increaseSnakeSize();
       }

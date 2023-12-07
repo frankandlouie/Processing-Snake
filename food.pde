@@ -10,6 +10,8 @@ public class food
   private int xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   private int ypos = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;;
   private color foodColor = color(225, 255, 32);
+  //private color foodColor = color(255, 0, 0);
+
   
   private int [] topLeftCorner    = {xpos, ypos};
   private int [] topRightCorner   = {xpos + squareSize, ypos};
@@ -40,6 +42,11 @@ public class food
   {
     fill(foodColor);
     square(xpos, ypos, squareSize);
+  }
+  
+  public color getFoodColor()
+  {
+    return foodColor;
   }
   
   public int getTopLeftCornerX()
@@ -80,6 +87,40 @@ public class food
   public int getBottomRightCornerY()
   {
     return bottomRightCorner[1];
+  }
+  
+  public boolean inSnake (snakeBody s, int x, int y)
+  {
+    boolean inSnake = false;
+    if(s.getXpos() == x && s.getYpos() == y)
+    {
+      inSnake = true;
+    }
+    return inSnake;
+  }
+  
+  public void updatePos(snakeBody s)
+  {
+    int x = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    int y = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+      
+    while(inSnake(s, x, y))
+    {
+      x = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+      y = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    }
+    
+    xpos = x;
+    ypos = y;
+    
+    topLeftCorner[0] = xpos;
+    topLeftCorner[1] = ypos;
+    topRightCorner[0] = xpos + squareSize;
+    topRightCorner[1] = ypos;
+    bottomLeftCorner[0] = xpos;
+    bottomLeftCorner[1] = ypos + squareSize;
+    bottomRightCorner[0] = xpos + squareSize;
+    bottomRightCorner[1] = ypos + squareSize;
   }
   
   public void updatePos()

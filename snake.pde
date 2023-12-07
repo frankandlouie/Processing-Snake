@@ -12,7 +12,7 @@ public class snakeBody
 
 
   /*private*/ int xpos = -25;
-  /*private*/ int ypos = -25; // = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+  /*private*/ int ypos = -25; // = (rand.nextInt(((wid  th - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   /*private*/ int tempX;
   /*private*/ int tempY;
   /*private char direction;*/
@@ -58,6 +58,11 @@ public class snakeBody
   public color getSnakeColor()
   {
     return snakeColor;
+  }
+  
+  public int getSnakeSize()
+  {
+    return squareSize;
   }
   
   public int getPreviousXpos()

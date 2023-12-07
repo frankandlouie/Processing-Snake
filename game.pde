@@ -27,35 +27,36 @@ public class game
   //snakeHead head = new snakeHead ();
   food food = new food ();
   ArrayList<snakeBody> snake = new ArrayList<snakeBody>();
+  menu menu = new menu(width, height, inBounds);
   
   public game()
   {
     snake.add(new snakeHead());
   }
   
-  public void lossScreen()
-  {
-    List<snakeBody> bodySublist = snake.subList(1, snake.size());
-    snakeHead head = (snakeHead)snake.get(0);
+  //public void lossScreen()
+  //{
+  //  List<snakeBody> bodySublist = snake.subList(1, snake.size());
+  //  snakeHead head = (snakeHead)snake.get(0);
 
-    drawArena();
-    for(snakeBody s : bodySublist)
-    {
-      s.drawUnit();
-    }
-    food.display(food.getXpos(), food.getYpos());
-    head.setColorWhite();
-    head.drawSnake(head.getXpos(), head.getYpos());
+  //  drawArena();
+  //  for(snakeBody s : bodySublist)
+  //  {
+  //    s.drawUnit();
+  //  }
+  //  food.display(food.getXpos(), food.getYpos());
+  //  head.setColorWhite();
+  //  head.drawSnake(head.getXpos(), head.getYpos());
     
-    fill(0);
-    textSize(100);
-    textAlign(CENTER);
-    stroke(10);
-    text("Game Over!", width/2, width/4);
-    fill(32);
-    textSize(50);
-    text("Play again?", width/2, 3*width/8);
-  }
+  //  fill(0);
+  //  textSize(100);
+  //  textAlign(CENTER);
+  //  stroke(10);
+  //  text("Game Over!", width/2, width/4);
+  //  fill(32);
+  //  textSize(50);
+  //  text("Play again?", width/2, 3*width/8);
+  //}
   
   public void drawArena()
   {
@@ -250,90 +251,98 @@ public class game
   
   public void runGame()
   {
-    snakeHead head = (snakeHead)snake.get(0);
-    if(!gameLost)
+    if(true)
     {
-      delay(50);
-      head.storePosition();
-      for(snakeBody s : snake)
-      {
-        s.storePosition();
-      }
-      head.move();
-      //for(snakeBody s : snake)
-      //{
-      //  s.updatePosition();
-      //}
-      head.updatePosition();
-      for (int i = snake.size() - 1; i > 0; i--) 
-      {
-        snake.get(i).setXpos(snake.get(i-1).getPreviousXpos());
-        snake.get(i).setYpos(snake.get(i-1).getPreviousYpos());
-      }
-      if(head.foodCollision(food))
-      {
-        for(snakeBody s : snake)
-        {
-          food.updatePos(s);
-        }
-        //scoreIncrement();
-        increaseSnakeSize();
-      }
-      if(snake.size() > 5)
-      {
-        List<snakeBody> bodySublist = snake.subList(1, snake.size());
-        for(snakeBody s : bodySublist)
-        {
-          if(head.selfCollision(s))
-          {
-            gameLost = true;
-          }
-        }
-      }
-      if(head.wallCollision())
-      {
-        gameLost = true;
-      }
-      
-      refreshScreen();
-      
-      for(snakeBody s : snake)
-      {
-        s.drawUnit();
-      }
-      food.display();
+      menu.mainMenu();
     }
     else
     {
-      bestSizeCalculator();
-      lossScreen();
-      if (yes.keyboardButtonClicked('y') || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
+      snakeHead head = (snakeHead)snake.get(0);
+      if(!gameLost)
       {
-        gameLost = false;
-        resetGame(head);
-      } 
-      else if (yes.mouseHoveringOverButton()) 
-      {
-        yes.darkenButton();
-      } 
-      else 
-      {
-        yes.restoreButton();
-      }
-      if(no.keyboardButtonClicked('n') || (no.mouseHoveringOverButton() && no.buttonClicked()))
-      {
-        exit();
-      }
-      else if (no.mouseHoveringOverButton())
-      {
-        no.darkenButton();
+        delay(50);
+        head.storePosition();
+        for(snakeBody s : snake)
+        {
+          s.storePosition();
+        }
+        head.move();
+        //for(snakeBody s : snake)
+        //{
+        //  s.updatePosition();
+        //}
+        head.updatePosition();
+        for (int i = snake.size() - 1; i > 0; i--) 
+        {
+          snake.get(i).setXpos(snake.get(i-1).getPreviousXpos());
+          snake.get(i).setYpos(snake.get(i-1).getPreviousYpos());
+        }
+        if(head.foodCollision(food))
+        {
+          for(snakeBody s : snake)
+          {
+            food.updatePos(s);
+          }
+          //scoreIncrement();
+          increaseSnakeSize();
+        }
+        if(snake.size() > 5)
+        {
+          List<snakeBody> bodySublist = snake.subList(1, snake.size());
+          for(snakeBody s : bodySublist)
+          {
+            if(head.selfCollision(s))
+            {
+              gameLost = true;
+            }
+          }
+        }
+        if(head.wallCollision())
+        {
+          gameLost = true;
+        }
+        
+        refreshScreen();
+        
+        for(snakeBody s : snake)
+        {
+          s.drawUnit();
+        }
+        food.display();
       }
       else
       {
-        no.restoreButton();
+        bestSizeCalculator();
+        //lossScreen();
+        menu.lossScreen(snake, food);
+        if (yes.keyboardButtonClicked('y') || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
+        {
+          gameLost = false;
+          resetGame(head);
+        } 
+        else if (yes.mouseHoveringOverButton()) 
+        {
+          yes.darkenButton();
+        } 
+        else 
+        {
+          yes.restoreButton();
+        }
+        if(no.keyboardButtonClicked('n') || (no.mouseHoveringOverButton() && no.buttonClicked()))
+        {
+          exit();
+        }
+        else if (no.mouseHoveringOverButton())
+        {
+          no.darkenButton();
+        }
+        else
+        {
+          no.restoreButton();
+        }
+        yes.drawButton();
+        no.drawButton();
       }
-      yes.drawButton();
-      no.drawButton();
     }
   }
 }

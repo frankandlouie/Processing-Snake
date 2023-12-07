@@ -3,7 +3,7 @@ import java.util.*;
 public class game
 {
   //private int width = 700, borderHeight = 700, inBounds = 650, height = 900;
-  private int width = 700, height = 900;
+  final private int width = 700, height = 900;
   
   private int squareSize = 25;
   private int bestSize = 0;

@@ -9,6 +9,7 @@ public class food
   private int squareSize = 25;
   private int xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   private int ypos = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;;
+  //private color foodColor; // = color(225, 255, 32);
   private color foodColor = color(225, 255, 32);
   //private color foodColor = color(255, 0, 0);
 
@@ -36,6 +37,11 @@ public class food
   public int getYpos()
   {
     return ypos;
+  }
+  
+  public void setFoodColor(color c)
+  {
+    foodColor = c;
   }
   
   public void display(int xpos, int ypos)

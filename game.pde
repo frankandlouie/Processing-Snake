@@ -12,6 +12,8 @@ public class game
   
   private int borderHeight = width;
   private int inBounds = width - squareSize * 2;
+  private color inBoundsColor;
+  private color outOfBoundsColor;
   
   private int buttonWidth = 200;
   private int buttonHeight = 75;
@@ -28,6 +30,9 @@ public class game
   food food = new food ();
   ArrayList<snakeBody> snake = new ArrayList<snakeBody>();
   menu menu = new menu(width, height, inBounds);
+  
+  //theme t = new theme();
+  //t.defaultTheme();
   
   public game()
   {
@@ -58,13 +63,26 @@ public class game
   //  text("Play again?", width/2, 3*width/8);
   //}
   
+  public void setInBoundsColor(color c)
+  {
+    inBoundsColor = c;
+  }
+  
+  public void setOutOfBoundsColor(color c)
+  {
+    outOfBoundsColor = c;
+  }
+  
   public void drawArena()
   {
     //Out of bounds
+    //fill(outOfBoundsColor);
     fill(128);
+    //fill(32);
     square(0, 0, width);
     //Inner square 
     fill(196);
+    //fill(96);
     square(0 + squareSize, 0 + squareSize, inBounds);
   }
   
@@ -72,15 +90,19 @@ public class game
   {
     //Score area
     fill(196);
+    //fill(96);
     rect(3*width/5, borderHeight, 2*width/5, height - borderHeight);
     //Direction sub heading
     fill(196);
+    //fill(96);
     rect(0, borderHeight, width/5, height - borderHeight);
     //Direction area
     fill(164);
+    //fill(128);
     rect(0, borderHeight, width/5, (height - borderHeight)/5);
     //Snake pos area
     fill(196);
+    //fill(96);
     rect(width/5, borderHeight, 2*width/5, height - borderHeight);
   }
   
@@ -251,12 +273,12 @@ public class game
   
   public void runGame()
   {
-    if(true)
-    {
-      menu.mainMenu();
-    }
-    else
-    {
+    //if(true)
+    //{
+    //  menu.mainMenu();
+    //}
+    //else
+    //{
       snakeHead head = (snakeHead)snake.get(0);
       if(!gameLost)
       {
@@ -344,5 +366,5 @@ public class game
         no.drawButton();
       }
     }
-  }
+  //}
 }

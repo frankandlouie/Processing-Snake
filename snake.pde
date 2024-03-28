@@ -7,7 +7,9 @@ public class snakeBody
   
   /*private*/ int height = 700, width = 700;
   /*private*/ int squareSize = 25;
+  ///*private*/ color snakeColor; // = color(255, 0, 0);
   /*private*/ color snakeColor = color(255, 0, 0);
+  ///*private*/ color snakeColor = color(96, 255, 96);
   /*private*/ color activeColor = snakeColor;
 
 
@@ -33,6 +35,11 @@ public class snakeBody
   {
     this.xpos = xpos;
     this.ypos = ypos;
+  }
+
+  public void setSnakeColor(color c)
+  {
+    snakeColor = c;
   }
 
   public void setXpos(int xpos)
@@ -312,7 +319,7 @@ class snakeHead extends snakeBody
         xpos -= squareSize;
       }
     }
-    if(move == ' ')
+    if(move == '0')
     {}
   }
   
@@ -349,7 +356,7 @@ class snakeHead extends snakeBody
   
   void resetVelocity()
   {
-    move = ' ';
+    move = '0';
   }
   
   public void setColorWhite() //out of bounds

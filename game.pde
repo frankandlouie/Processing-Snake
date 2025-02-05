@@ -9,6 +9,7 @@ public class game
   private int bestSize = 0;
   private int snakeSize = 1;
   private boolean gameLost = false;
+  boolean playGame = false;
   
   private int borderHeight = width;
   private int inBounds = width - squareSize * 2;
@@ -23,8 +24,8 @@ public class game
   private int [] buttonTextXpos = {      buttonXpos[0] + buttonWidth/4      ,       buttonXpos[1] + 5*buttonWidth/18   };
   private int [] buttonTextYpos = {      buttonYpos[0] + 5*buttonHeight/6   ,       buttonYpos[1] + 5*buttonHeight/6   };
   
-  Button yes = new Button(buttonWidth, buttonHeight, buttonXpos[0], buttonYpos[0], 0, 255, 0, "YES");
-  Button no = new Button(buttonWidth, buttonHeight, buttonXpos[1], buttonYpos[1], 255, 0, 0, "NO");
+  Button yes = new Button(buttonWidth, buttonHeight, buttonXpos[0], buttonYpos[0], 0, 255, 0, 'y', "YES");
+  Button no = new Button(buttonWidth, buttonHeight, buttonXpos[1], buttonYpos[1], 255, 0, 0, 'n', "NO");
 
   //snakeHead head = new snakeHead ();
   food food = new food ();
@@ -77,32 +78,32 @@ public class game
   {
     //Out of bounds
     //fill(outOfBoundsColor);
-    fill(128);
-    //fill(32);
+    //fill(128);
+    fill(32);
     square(0, 0, width);
     //Inner square 
-    fill(196);
-    //fill(96);
+    //fill(196);
+    fill(96);
     square(0 + squareSize, 0 + squareSize, inBounds);
   }
   
   public void drawHUDframe()
   {
     //Score area
-    fill(196);
-    //fill(96);
+    //fill(196);
+    fill(96);
     rect(3*width/5, borderHeight, 2*width/5, height - borderHeight);
     //Direction sub heading
-    fill(196);
-    //fill(96);
+    //fill(196);
+    fill(96);
     rect(0, borderHeight, width/5, height - borderHeight);
     //Direction area
-    fill(164);
-    //fill(128);
+    //fill(164);
+    fill(128);
     rect(0, borderHeight, width/5, (height - borderHeight)/5);
     //Snake pos area
-    fill(196);
-    //fill(96);
+    //fill(196);
+    fill(96);
     rect(width/5, borderHeight, 2*width/5, height - borderHeight);
   }
   
@@ -273,12 +274,13 @@ public class game
   
   public void runGame()
   {
-    //if(true)
-    //{
-    //  menu.mainMenu();
-    //}
-    //else
-    //{
+    //if(!menu.mainMenu())
+    if(!playGame)
+    {
+      playGame = menu.mainMenu();
+    }
+    else
+    {
       snakeHead head = (snakeHead)snake.get(0);
       if(!gameLost)
       {
@@ -301,10 +303,10 @@ public class game
         }
         if(head.foodCollision(food))
         {
-          for(snakeBody s : snake)
-          {
-            food.updatePos(s);
-          }
+          //for(snakeBody s : snake)
+          //{
+            food.updatePos(snake);
+          //}
           //scoreIncrement();
           increaseSnakeSize();
         }
@@ -337,22 +339,25 @@ public class game
         bestSizeCalculator();
         //lossScreen();
         menu.lossScreen(snake, food);
-        if (yes.keyboardButtonClicked('y') || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
+        if (yes.keyboardButtonClicked() || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
         {
-          gameLost = false;
           resetGame(head);
+          gameLost = false;
         } 
         else if (yes.mouseHoveringOverButton()) 
         {
           yes.darkenButton();
-        } 
+        }
         else 
         {
           yes.restoreButton();
         }
-        if(no.keyboardButtonClicked('n') || (no.mouseHoveringOverButton() && no.buttonClicked()))
+        if(no.keyboardButtonClicked() || (no.mouseHoveringOverButton() && no.buttonClicked()))
         {
-          exit();
+          //exit();
+          resetGame(head);
+          playGame = false;
+          gameLost = false;
         }
         else if (no.mouseHoveringOverButton())
         {
@@ -366,5 +371,5 @@ public class game
         no.drawButton();
       }
     }
-  //}
+  }
 }

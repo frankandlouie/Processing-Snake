@@ -10,8 +10,8 @@ public class food
   private int xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   private int ypos = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;;
   //private color foodColor; // = color(225, 255, 32);
-  private color foodColor = color(225, 255, 32);
-  //private color foodColor = color(255, 0, 0);
+  //private color foodColor = color(225, 255, 32);
+  private color foodColor = color(255, 0, 0);
 
   
   private int [] topLeftCorner    = {xpos, ypos};
@@ -95,26 +95,38 @@ public class food
     return bottomRightCorner[1];
   }
   
-  public boolean inSnake (snakeBody s, int x, int y)
-  {
-    boolean inSnake = false;
-    if(s.getXpos() == x && s.getYpos() == y)
+    public boolean inSnake (ArrayList<snakeBody> s, int x, int y)
     {
-      inSnake = true;
+      //boolean inSnake = false;
+      for(snakeBody segment : s)
+      {
+        if((segment.getXpos() == x && segment.getYpos() == y))
+        {
+          //inSnake = true;
+          return true;
+        }
+      }
+      //return inSnake;
+      return false;
     }
-    return inSnake;
-  }
   
-  public void updatePos(snakeBody s)
+  public void updatePos(ArrayList<snakeBody> s)
   {
-    int x = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-    int y = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    int x;// = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    int y;// = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
       
-    while(inSnake(s, x, y))
+    //while(inSnake(s, x, y))
+    //{
+    //  x = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    //  y = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+    //}
+    
+    do
     {
       x = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
       y = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
     }
+    while(inSnake(s, x, y));
     
     xpos = x;
     ypos = y;

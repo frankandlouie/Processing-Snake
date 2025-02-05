@@ -8,12 +8,13 @@ public class Button
   private float yPos = 0;
   private float xTextPos;
   private float yTextPos;
+  private char activatingButton;
   private String text = " ";
   private color currentColor; 
   private color butColor;
   private color darkenColor;
   
-  public Button(float width, float height, float xPos, float yPos, int R, int G, int B, String buttonText)
+  public Button(float width, float height, float xPos, float yPos, int R, int G, int B, char c, String buttonText)
   {
     this.width = width;
     this.height = height;
@@ -22,6 +23,7 @@ public class Button
     //this.textSize = textSize;
     butColor = color(R, G, B);
     darkenColor = butColor;
+    activatingButton = c;
     text = buttonText;
     
     if(R == 0 && G == 0)
@@ -71,10 +73,10 @@ public class Button
     return clicked;
   }
   
-  public boolean keyboardButtonClicked(char c)
+  public boolean keyboardButtonClicked()
   {
     boolean pressed = false; 
-    if(keyPressed && key == c)
+    if(keyPressed && key == activatingButton)
     {
       pressed = true;
     }

@@ -8,8 +8,8 @@ public class snakeBody
   /*private*/ int height = 700, width = 700;
   /*private*/ int squareSize = 25;
   ///*private*/ color snakeColor; // = color(255, 0, 0);
-  /*private*/ color snakeColor = color(255, 0, 0);
-  ///*private*/ color snakeColor = color(96, 255, 96);
+  ///*private*/ color snakeColor = color(255, 0, 0);
+  /*private*/ color snakeColor = color(96, 255, 96);
   /*private*/ color activeColor = snakeColor;
 
 
@@ -220,6 +220,11 @@ class snakeHead extends snakeBody
     setYpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
   }
   
+  public void resetDirection()
+  {
+    direction = '\0';
+  }
+  
   public void moveRight()
   {
     if((keyPressed && key == 'd'))// || (key == CODED && keyCode == RIGHT))
@@ -275,52 +280,99 @@ class snakeHead extends snakeBody
     moveRight();
     moveLeft();
     
-    if(move == 'n')
+    char newDirection = move;
+    
+    switch (move) 
     {
-      if(direction == 's')
-      {
-        move = 's';
-      }
-      else
-      {
-        ypos -= squareSize;
-      }
+      case 'n': 
+          if (direction == 's') { // Cannot move up if moving down
+              newDirection = 's';
+          }
+          break;
+      case 's': 
+          if (direction == 'n') { // Cannot move down if moving up
+              newDirection = 'n';
+          }
+          break;
+      case 'w': 
+          if (direction == 'e') { // Cannot move left if moving right
+              newDirection = 'e';
+          }
+          break;
+      case 'e': 
+          if (direction == 'w') { // Cannot move right if moving left
+              newDirection = 'w';
+          }
+          break;
     }
-    if(move == 's')
-    {
-      if(direction == 'n')
-      {
-        move = 'n';
-      }
-      else
-      {
-      ypos += squareSize;
-      }
+    
+    // Update position based on the new direction
+    switch (newDirection) {
+        case 'n':
+            ypos -= squareSize;
+            break;
+        case 's':
+            ypos += squareSize;
+            break;
+        case 'e':
+            xpos += squareSize;
+            break;
+        case 'w':
+            xpos -= squareSize;
+            break;
     }
-    if(move == 'e')
-    {
-      if(direction == 'w')
-      {
-        move = 'w';
-      }
-      else
-      {
-        xpos += squareSize;
-      }
+
+    // Update the direction to the new direction if it's valid
+    if (newDirection != move) {
+        direction = newDirection;
     }
-    if(move == 'w')
-    {
-      if(direction == 'e')
-      {
-        move = 'e';
-      }
-      else
-      {
-        xpos -= squareSize;
-      }
-    }
-    if(move == '0')
-    {}
+    
+    //if(move == 'n')
+    //{
+    //  if(direction == 's')
+    //  {
+    //    move = 's';
+    //  }
+    //  else
+    //  {
+    //    ypos -= squareSize;
+    //  }
+    //}
+    //else if(move == 's')
+    //{
+    //  if(direction == 'n')
+    //  {
+    //    move = 'n';
+    //  }
+    //  else
+    //  {
+    //    ypos += squareSize;
+    //  }
+    //}
+    //else if(move == 'e')
+    //{
+    //  if(direction == 'w')
+    //  {
+    //    move = 'w';
+    //  }
+    //  else
+    //  {
+    //    xpos += squareSize;
+    //  }
+    //}
+    //else if(move == 'w')
+    //{
+    //  if(direction == 'e')
+    //  {
+    //    move = 'e';
+    //  }
+    //  else
+    //  {
+    //    xpos -= squareSize;
+    //  }
+    //}
+    //if(move == '0')
+    //{}
   }
   
   public char getDirection()
@@ -346,10 +398,6 @@ class snakeHead extends snakeBody
       //text("Traveling North", 5, 45);
       direction = 'n';
     }
-    //if(xpos == tempX && ypos == tempY)
-    //{
-    //  direction = ' ';
-    //}
     
     return direction;
   }
@@ -374,6 +422,7 @@ class snakeHead extends snakeBody
     xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
     ypos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
     resetVelocity();
+    resetDirection();
     setColorIB();
   }
   
@@ -391,7 +440,6 @@ class snakeHead extends snakeBody
   
   //public boolean selfCollision(ArrayList <snakeBody> snake)
   public boolean selfCollision(snakeBody s)
-
   {
     boolean collided = false;
       

@@ -18,14 +18,50 @@ public class menu
     
   }
   
-  public void mainMenu()
+  public boolean mainMenu()
   {
-    background(196, 132, 255);
-    textSize(125);
+    //public Button(float width, float height, float xPos, float yPos, int R, int G, int B, String buttonText)
+    int bwidth = 150;
+    int bheight = 50;
+    boolean playGame = false;
+    Button play = new Button(bwidth, bheight, (width/2 - bwidth/2), (height/2 - bheight/2), 0, 255, 0, 'p', "PLAY");
+    Button exit = new Button(bwidth, bheight, (width/2 - bwidth/2), (height/2 - bheight/2) + (bheight + bheight / 4), 255, 0, 0, 'e', "EXIT");
+      
+    background(96);
     textAlign(CENTER);
+    textSize(125);
     fill(0);
     text("SNAKE", width/2, height/8);
     textAlign(BASELINE);
+    
+    if (play.keyboardButtonClicked() || (play.mouseHoveringOverButton() && play.buttonClicked()))
+    {
+      playGame = true;
+    } 
+    else if (play.mouseHoveringOverButton()) 
+    {
+      play.darkenButton();
+    } 
+    else 
+    {
+      play.restoreButton();
+    }
+    
+    if (exit.keyboardButtonClicked() || (exit.mouseHoveringOverButton() && exit.buttonClicked()))
+    {
+      exit();
+    } 
+    else if (exit.mouseHoveringOverButton()) 
+    {
+      exit.darkenButton();
+    } 
+    else 
+    {
+      exit.restoreButton();
+    }
+    play.drawButton();
+    exit.drawButton();
+    return playGame;
   }
   
   public void lossScreen(ArrayList<snakeBody> snake, food f)
@@ -34,10 +70,12 @@ public class menu
     snakeHead head = (snakeHead)snake.get(0);
 
     //Out of bounds
-    fill(128);
+    //fill(128);
+    fill(32);
     square(0, 0, width);
     //Inner square 
-    fill(196);
+    //fill(196);
+    fill(96);
     square(0 + head.getSnakeSize(), 0 + head.getSnakeSize(), inBounds);
     
     for(snakeBody s : bodySublist)

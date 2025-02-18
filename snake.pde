@@ -8,8 +8,8 @@ public class snakeBody
   /*private*/ int height = 700, width = 700;
   /*private*/ int squareSize = 25;
   ///*private*/ color snakeColor; // = color(255, 0, 0);
-  ///*private*/ color snakeColor = color(255, 0, 0);
-  /*private*/ color snakeColor = color(96, 255, 96);
+  /*private*/ color snakeColor = color(255, 0, 0);
+  ///*private*/ color snakeColor = color(96, 255, 96);
   /*private*/ color activeColor = snakeColor;
 
 

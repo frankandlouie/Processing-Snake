@@ -27,7 +27,7 @@ public class menu
     Button play = new Button(bwidth, bheight, (width/2 - bwidth/2), (height/2 - bheight/2), 0, 255, 0, 'p', "PLAY");
     Button exit = new Button(bwidth, bheight, (width/2 - bwidth/2), (height/2 - bheight/2) + (bheight + bheight / 4), 255, 0, 0, 'e', "EXIT");
       
-    background(96);
+    background(128);
     textAlign(CENTER);
     textSize(125);
     fill(0);
@@ -70,12 +70,12 @@ public class menu
     snakeHead head = (snakeHead)snake.get(0);
 
     //Out of bounds
-    //fill(128);
-    fill(32);
+    fill(128);
+    //fill(32);
     square(0, 0, width);
     //Inner square 
-    //fill(196);
-    fill(96);
+    fill(196);
+    //fill(96);
     square(0 + head.getSnakeSize(), 0 + head.getSnakeSize(), inBounds);
     
     for(snakeBody s : bodySublist)

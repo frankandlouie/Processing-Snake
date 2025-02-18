@@ -10,8 +10,8 @@ public class food
   private int xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   private int ypos = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;;
   //private color foodColor; // = color(225, 255, 32);
-  //private color foodColor = color(225, 255, 32);
-  private color foodColor = color(255, 0, 0);
+  private color foodColor = color(225, 255, 32);
+  //private color foodColor = color(255, 0, 0);
 
   
   private int [] topLeftCorner    = {xpos, ypos};

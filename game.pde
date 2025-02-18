@@ -78,32 +78,32 @@ public class game
   {
     //Out of bounds
     //fill(outOfBoundsColor);
-    //fill(128);
-    fill(32);
+    fill(128);
+    //fill(32);
     square(0, 0, width);
     //Inner square 
-    //fill(196);
-    fill(96);
+    fill(196);
+    //fill(96);
     square(0 + squareSize, 0 + squareSize, inBounds);
   }
   
   public void drawHUDframe()
   {
     //Score area
-    //fill(196);
-    fill(96);
+    fill(196);
+    //fill(96);
     rect(3*width/5, borderHeight, 2*width/5, height - borderHeight);
     //Direction sub heading
-    //fill(196);
-    fill(96);
+    fill(196);
+    //fill(96);
     rect(0, borderHeight, width/5, height - borderHeight);
     //Direction area
-    //fill(164);
-    fill(128);
+    fill(164);
+    //fill(128);
     rect(0, borderHeight, width/5, (height - borderHeight)/5);
     //Snake pos area
-    //fill(196);
-    fill(96);
+    fill(196);
+    //fill(96);
     rect(width/5, borderHeight, 2*width/5, height - borderHeight);
   }
   

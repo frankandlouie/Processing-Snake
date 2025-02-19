@@ -9,7 +9,8 @@ public class game
   private int bestSize = 0;
   private int snakeSize = 1;
   private boolean gameLost = false;
-  boolean playGame = false;
+  // 1 = playgame; 2 = settings menu; >2 = more settings stuff
+  private int mode = 0;
   
   private int borderHeight = width;
   private int inBounds = width - squareSize * 2;
@@ -275,11 +276,23 @@ public class game
   public void runGame()
   {
     //if(!menu.mainMenu())
-    if(!playGame)
+    if(mode == 0)
     {
-      playGame = menu.mainMenu();
+      mode = menu.mainMenu();
     }
-    else
+    else if (mode == 2)
+    {
+      mode = menu.settingsMenu();
+    }
+    else if (mode == 3)
+    {
+      mode = menu.htpMenu();
+    }
+    else if (mode == 4)
+    {
+      mode = menu.changeThemeMenu();
+    }
+    else if (mode == 1)
     {
       snakeHead head = (snakeHead)snake.get(0);
       if(!gameLost)
@@ -356,7 +369,7 @@ public class game
         {
           //exit();
           resetGame(head);
-          playGame = false;
+          mode = 0;
           gameLost = false;
         }
         else if (no.mouseHoveringOverButton())

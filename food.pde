@@ -9,15 +9,19 @@ public class food
   private int squareSize = 25;
   private int xpos = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
   private int ypos = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;;
-  //private color foodColor; // = color(225, 255, 32);
   private color foodColor = color(225, 255, 32);
-  //private color foodColor = color(255, 0, 0);
 
   
   private int [] topLeftCorner    = {xpos, ypos};
   private int [] topRightCorner   = {xpos + squareSize, ypos};
   private int [] bottomLeftCorner = {xpos, ypos + squareSize};
   private int [] bottomRightCorner= {xpos + squareSize, ypos + squareSize};
+  
+  
+  public color getColor()
+  {
+    return foodColor;
+  }
   
   public void setXpos(int xpos)
   {
@@ -95,31 +99,22 @@ public class food
     return bottomRightCorner[1];
   }
   
-    public boolean inSnake (ArrayList<snakeBody> s, int x, int y)
+  public boolean inSnake (ArrayList<snakeBody> s, int x, int y)
+  {
+    for(snakeBody segment : s)
     {
-      //boolean inSnake = false;
-      for(snakeBody segment : s)
+      if((segment.getXpos() == x && segment.getYpos() == y))
       {
-        if((segment.getXpos() == x && segment.getYpos() == y))
-        {
-          //inSnake = true;
-          return true;
-        }
+        return true;
       }
-      //return inSnake;
-      return false;
-    }
+    } 
+    return false;
+  }
   
   public void updatePos(ArrayList<snakeBody> s)
   {
-    int x;// = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-    int y;// = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-      
-    //while(inSnake(s, x, y))
-    //{
-    //  x = (rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-    //  y = (rand.nextInt(((height - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
-    //}
+    int x;
+    int y;
     
     do
     {
@@ -156,23 +151,20 @@ public class food
     bottomRightCorner[1] = ypos + squareSize;
   }
   
-  //public void debug()
-  //{
-  //  fill(foodColor);
-  //  square(310, 775, 50);
-  //  fill(255);
-  //  textSize(25);
-  //  //text("(" + topLeftCorner[0]+", " + topLeftCorner[1] + ")", 100, 400);
-  //  //text("(" + topRightCorner[0]+", " + topRightCorner[1] + ")", 250, 400); 
-  //  //text("(" + bottomLeftCorner[0]+", " + bottomLeftCorner[1] + ")", 100, 525);
-  //  //text("(" + bottomRightCorner[0]+", " + bottomRightCorner[1] + ")", 250, 525);
-  //}
+  public void debug()
+  {
+    fill(foodColor);
+    square(310, 775, 50);
+    fill(255);
+    textSize(25);
+    text("(" + topLeftCorner[0]+", " + topLeftCorner[1] + ")", 100, 400);
+    text("(" + topRightCorner[0]+", " + topRightCorner[1] + ")", 250, 400); 
+    text("(" + bottomLeftCorner[0]+", " + bottomLeftCorner[1] + ")", 100, 525);
+    text("(" + bottomRightCorner[0]+", " + bottomRightCorner[1] + ")", 250, 525);
+  }
   
   public void display()
   {
-    //fill(0);
-    //textSize(50);
-    //text("W:"+(width)+"\nH:"+(height), 200, 200);
     fill(foodColor);
     square(xpos, ypos, squareSize);        
   }

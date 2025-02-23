@@ -14,7 +14,8 @@ public class Button
   private color butColor;
   private color darkenColor;
   
-  private boolean mouseWasClicked = false;
+  private boolean mousePreviouslyPressed = false;
+  private boolean keyPreviouslyPressed = false;
 
   
   public Button(float width, float height, float xPos, float yPos, int R, int G, int B, char c, String buttonText)
@@ -23,30 +24,13 @@ public class Button
     this.height = height;
     this.xPos = xPos;
     this.yPos = yPos;
-    //this.textSize = textSize;
     butColor = color(R, G, B);
     darkenColor = butColor;
     activatingButton = c;
     text = buttonText;
-    
     xTextPos = xPos + this.width/2;
     yTextPos = yPos + 13 * this.height/16;
-    
     butColor = color(R, G, B);
-    
-    //if(R == 0 && G == 0)
-    //{
-    //  butColor = color(150, 150, B);
-    //}
-    //if(G == 0 && B == 0)
-    //{
-    //  butColor = color(R, 150, 150);
-    //}
-    //if(R == 0 && B == 0)
-    //{
-    //  butColor = color(150, G, 150);
-    //}
-    
     currentColor = butColor;
   }
   
@@ -89,36 +73,47 @@ public class Button
   
   public boolean buttonClicked()
   {
-    //boolean clicked = false;
-    //if(mousePressed)
-    //{
-    //  clicked = true;
-    //}
-    //return clicked;
-    boolean clicked = false;
-    if((mouseX >= xPos && mouseX <= xPos + width && mouseY >= yPos && mouseY <= yPos + height) && mousePressed && !mouseWasClicked)
+    if ((mouseX >= xPos && mouseX <= xPos + width && mouseY >= yPos && mouseY <= yPos + height) && mousePressed)
     {
-      clicked = true;
-      mouseWasClicked = true;
+      if (!mousePreviouslyPressed)
+      { 
+        mousePreviouslyPressed = true; // Prevent multiple detections
+        return true; 
+      }
     }
-    else if (!mousePressed)
+    else
     {
-      mouseWasClicked = false;
+      mousePreviouslyPressed = false; // Reset when the mouse button is released
     }
-    return clicked;
+  
+    return false;
+    
     //return ((mouseX >= xPos && mouseX <= xPos + longSide && mouseY >= yPos && mouseY <= yPos + shortSide) && mousePressed) ? true : false;
 
   }
   
   public boolean keyboardButtonClicked()
   {
-    boolean pressed = false; 
-    if(keyPressed && key == activatingButton)
-    {
-      pressed = true;
-    }
+    //boolean pressed = false; 
+    //if(keyPressed && key == activatingButton)
+    //{
+    //  pressed = true;
+    //}
     
-    return pressed;
+    //return pressed;
+    if (keyPressed && key == activatingButton)
+    {
+      if (!keyPreviouslyPressed)
+      { 
+        keyPreviouslyPressed = true; // Mark as pressed to prevent multiple triggers
+        return true; 
+      }
+    }
+    else
+    {
+      keyPreviouslyPressed = false; // Reset when key is released
+    }    
+    return false;
   }
   
   public void darkenButton()

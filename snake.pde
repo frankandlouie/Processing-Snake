@@ -7,21 +7,14 @@ public class snakeBody
   
   /*private*/ int height = 700, width = 700;
   /*private*/ int squareSize = 25;
-  ///*private*/ color snakeColor; // = color(255, 0, 0);
   /*private*/ color snakeColor = color(255, 0, 0);
-  ///*private*/ color snakeColor = color(96, 255, 96);
   /*private*/ color activeColor = snakeColor;
 
 
   /*private*/ int xpos = -25;
-  /*private*/ int ypos = -25; // = (rand.nextInt(((wid  th - 50 - squareSize) / squareSize) + 1) * squareSize) + 25;
+  /*private*/ int ypos = -25;
   /*private*/ int tempX;
   /*private*/ int tempY;
-  /*private char direction;*/
-  //int snakeSize = 1;
-  //private int [] squareCenter = {(int)(xpos + (squareSize / 2) + 0.5), (int)(ypos + (squareSize / 2) + 0.5)};
-  
-  //private char move;
   
   //Index [0] = X coord, [1] = Y coord, [2] = Previous X, [3] = Previous Y
   /*private*/ int [] topLeftCorner = new int[4];
@@ -30,18 +23,19 @@ public class snakeBody
   /*private*/ int [] bottomRightCorner = new int[4];
   
   public snakeBody(){}
-
-  public snakeBody(int xpos, int ypos)
+  
+  public snakeBody(color c)
   {
-    this.xpos = xpos;
-    this.ypos = ypos;
+    snakeColor = c;
+    activeColor = c;
   }
 
   public void setSnakeColor(color c)
   {
-    snakeColor = c;
+    this.snakeColor = c;
+    this.activeColor = c;
   }
-
+  
   public void setXpos(int xpos)
   {
     this.xpos = xpos;
@@ -64,7 +58,7 @@ public class snakeBody
   
   public color getSnakeColor()
   {
-    return snakeColor;
+    return activeColor;
   }
   
   public int getSnakeSize()
@@ -173,31 +167,31 @@ public class snakeBody
     ypos = y;
   }
   
-  //public void debugShowCurrentPos()
-  //{
-  //  fill(255, 0, 0);
-  //  square(200, 775, 50);
-  //  textSize(25);
-  //  text("[" + topLeftCorner[0] + ", " + topLeftCorner[1] + "]", 175, 875);
-  //  //text("(" + topLeftCorner[0]+", " + topLeftCorner[1] + ")", 450, 300);
-  //  //text("(" + topRightCorner[0]+", " + topRightCorner[1] + ")", 600, 300); 
-  //  //text("(" + bottomLeftCorner[0]+", " + bottomLeftCorner[1] + ")", 450, 425);
-  //  //text("(" + bottomRightCorner[0]+", " + bottomRightCorner[1] + ")", 600, 425);
-  //  //text("Current\nPos", 530, 350);
-  //}
+  public void debugShowCurrentPos()
+  {
+    fill(255, 0, 0);
+    square(200, 775, 50);
+    textSize(25);
+    text("[" + topLeftCorner[0] + ", " + topLeftCorner[1] + "]", 175, 875);
+    text("(" + topLeftCorner[0]+", " + topLeftCorner[1] + ")", 450, 300);
+    text("(" + topRightCorner[0]+", " + topRightCorner[1] + ")", 600, 300); 
+    text("(" + bottomLeftCorner[0]+", " + bottomLeftCorner[1] + ")", 450, 425);
+    text("(" + bottomRightCorner[0]+", " + bottomRightCorner[1] + ")", 600, 425);
+    text("Current\nPos", 530, 350);
+  }
   
-  //public void debugShowPreviousPos()
-  //{
-  //  fill(255, 0 ,0);
-  //  square(525, 500, 100);
-  //  fill(255);
-  //  textSize(25);
-  //  text("(" + topLeftCorner[2]+", " + topLeftCorner[3] + ")", 450, 500);
-  //  text("(" + topRightCorner[2]+", " + topRightCorner[3] + ")", 600, 500); 
-  //  text("(" + bottomLeftCorner[2]+", " + bottomLeftCorner[3] + ")", 450, 625);
-  //  text("(" + bottomRightCorner[2]+", " + bottomRightCorner[3] + ")", 600, 625);
-  //  text("Previous\nPos", 530, 550);
-  //}
+  public void debugShowPreviousPos()
+  {
+    fill(255, 0 ,0);
+    square(525, 500, 100);
+    fill(255);
+    textSize(25);
+    text("(" + topLeftCorner[2]+", " + topLeftCorner[3] + ")", 450, 500);
+    text("(" + topRightCorner[2]+", " + topRightCorner[3] + ")", 600, 500); 
+    text("(" + bottomLeftCorner[2]+", " + bottomLeftCorner[3] + ")", 450, 625);
+    text("(" + bottomRightCorner[2]+", " + bottomRightCorner[3] + ")", 600, 625);
+    text("Previous\nPos", 530, 550);
+  }
     
   public void drawUnit()
   {
@@ -208,16 +202,18 @@ public class snakeBody
 
 class snakeHead extends snakeBody
 {
-  //private int xpos, ypos, tempX, tempY;
-  //private int squareSize = 25;
   private char direction;
   private char move;
-  //private color snakeColor;
   
   public snakeHead()
   {
     setXpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
     setYpos((rand.nextInt(((width - 50 - squareSize) / squareSize) + 1) * squareSize) + 25);
+  }
+  
+  public void setSnakeColorHeadCall(color c)
+  {
+    setSnakeColor(c);
   }
   
   public void resetDirection()
@@ -326,53 +322,6 @@ class snakeHead extends snakeBody
     if (newDirection != move) {
         direction = newDirection;
     }
-    
-    //if(move == 'n')
-    //{
-    //  if(direction == 's')
-    //  {
-    //    move = 's';
-    //  }
-    //  else
-    //  {
-    //    ypos -= squareSize;
-    //  }
-    //}
-    //else if(move == 's')
-    //{
-    //  if(direction == 'n')
-    //  {
-    //    move = 'n';
-    //  }
-    //  else
-    //  {
-    //    ypos += squareSize;
-    //  }
-    //}
-    //else if(move == 'e')
-    //{
-    //  if(direction == 'w')
-    //  {
-    //    move = 'w';
-    //  }
-    //  else
-    //  {
-    //    xpos += squareSize;
-    //  }
-    //}
-    //else if(move == 'w')
-    //{
-    //  if(direction == 'e')
-    //  {
-    //    move = 'e';
-    //  }
-    //  else
-    //  {
-    //    xpos -= squareSize;
-    //  }
-    //}
-    //if(move == '0')
-    //{}
   }
   
   public char getDirection()
@@ -380,22 +329,18 @@ class snakeHead extends snakeBody
     textSize(50);
     if(xpos > tempX)
     {
-      //text("Traveling East", 5, 45);
       direction = 'e';
     }
     else if(xpos < tempX)
     {
-      //text("Traveling West", 5, 45);
       direction = 'w';
     }
     if(ypos > tempY)
     {
-      //text("Traveling South", 5, 45);
       direction = 's';
     }
     else if(ypos < tempY)
     {
-      //text("Traveling North", 5, 45);
       direction = 'n';
     }
     
@@ -438,22 +383,15 @@ class snakeHead extends snakeBody
     return eaten;
   }
   
-  //public boolean selfCollision(ArrayList <snakeBody> snake)
   public boolean selfCollision(snakeBody s)
   {
     boolean collided = false;
-      
-    // Create a sublist from index 1 to the end
-    //List<snakeBody> bodySublist = snake.subList(1, snake.size());
     
-    //for(snakeBody s : bodySublist)
-    //{
     if(getXpos() == s.getXpos() && getYpos() == s.getYpos())
     {
       collided = true;
       System.out.println("hit himself (");
     }
-    //}
     
     return collided;
   }

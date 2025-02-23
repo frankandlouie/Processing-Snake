@@ -28,42 +28,14 @@ public class game
   Button yes = new Button(buttonWidth, buttonHeight, buttonXpos[0], buttonYpos[0], 0, 255, 0, 'y', "YES");
   Button no = new Button(buttonWidth, buttonHeight, buttonXpos[1], buttonYpos[1], 255, 0, 0, 'n', "NO");
 
-  //snakeHead head = new snakeHead ();
+  hud hud = new hud ();
   food food = new food ();
   ArrayList<snakeBody> snake = new ArrayList<snakeBody>();
-  menu menu = new menu(width, height, inBounds);
-  
-  //theme t = new theme();
-  //t.defaultTheme();
   
   public game()
   {
     snake.add(new snakeHead());
   }
-  
-  //public void lossScreen()
-  //{
-  //  List<snakeBody> bodySublist = snake.subList(1, snake.size());
-  //  snakeHead head = (snakeHead)snake.get(0);
-
-  //  drawArena();
-  //  for(snakeBody s : bodySublist)
-  //  {
-  //    s.drawUnit();
-  //  }
-  //  food.display(food.getXpos(), food.getYpos());
-  //  head.setColorWhite();
-  //  head.drawSnake(head.getXpos(), head.getYpos());
-    
-  //  fill(0);
-  //  textSize(100);
-  //  textAlign(CENTER);
-  //  stroke(10);
-  //  text("Game Over!", width/2, width/4);
-  //  fill(32);
-  //  textSize(50);
-  //  text("Play again?", width/2, 3*width/8);
-  //}
   
   public void setInBoundsColor(color c)
   {
@@ -75,55 +47,11 @@ public class game
     outOfBoundsColor = c;
   }
   
-  public void drawArena()
+  public void refreshScreen(int snakeX, int snakeY, color snakeColor, int foodX, int foodY, color foodColor, int bestSize, int snakeSize, char snakeDirection)
   {
-    //Out of bounds
-    //fill(outOfBoundsColor);
-    fill(128);
-    //fill(32);
-    square(0, 0, width);
-    //Inner square 
-    fill(196);
-    //fill(96);
-    square(0 + squareSize, 0 + squareSize, inBounds);
+    //drawScreenFrame();
+    hud.refreshScreen(snakeX, snakeY, snakeColor, foodX, foodY, foodColor, bestSize, snakeSize, snakeDirection);
   }
-  
-  public void drawHUDframe()
-  {
-    //Score area
-    fill(196);
-    //fill(96);
-    rect(3*width/5, borderHeight, 2*width/5, height - borderHeight);
-    //Direction sub heading
-    fill(196);
-    //fill(96);
-    rect(0, borderHeight, width/5, height - borderHeight);
-    //Direction area
-    fill(164);
-    //fill(128);
-    rect(0, borderHeight, width/5, (height - borderHeight)/5);
-    //Snake pos area
-    fill(196);
-    //fill(96);
-    rect(width/5, borderHeight, 2*width/5, height - borderHeight);
-  }
-  
-  public void drawScreenFrame()
-  {
-    drawArena();
-    drawHUDframe();
-    showHUD();
-  }
-  
-  public void refreshScreen()
-  {
-    drawScreenFrame();
-  }
-  
-  //public void scoreIncrement()
-  //{
-  //  score++;
-  //}
   
   public void bestSizeCalculator()
   {
@@ -133,118 +61,6 @@ public class game
     }
   }
   
-  //public void resetScore()
-  //{
-  //  score = 0 ;
-  //}
-  
-  //public void loseGame()
-  //{
-  //  //lossMenu();
-  //  //boolean restartGame = false;
-  //  //if(!restartGame)
-  //  //{
-  //  //  one.setXpos(one.getXpos());
-  //  //  one.setYpos(one.getYpos());
-  //  //  food.setXpos(food.getXpos());
-  //  //  food.setYpos(food.getYpos());
-  //  //  one.redrawSnake(one.getXpos(), one.getYpos());
-  //  //  food.redrawFood(food.getXpos(), food.getYpos());
-  //  //  drawScreenFrame();
-  //  //  //noLoop();
-  //  //}
-  //}
-  
-  //public void displayScore()
-  //{
-  //  fill(0);
-  //  textSize(25);
-  //  textAlign(BASELINE);
-  //  text("Score: " + score, 500, 775);
-  //}
-  
-  public void displayBestSize()
-  {
-    fill(0);
-    textSize(25);
-    textAlign(BASELINE);
-    text("Best: " + bestSize, 500, 825);
-  }
-  
-  public void displaySize()
-  {
-    fill(0);
-    textSize(25);
-    textAlign(BASELINE);
-    text("Size: " + snakeSize, 500, 775);
-  }
-  
-  public void displayDirection()
-  {
-    snakeHead head = (snakeHead)snake.get(0);
-    
-    char direction = head.getDirection();
-    
-    fill(0);
-    textSize(25);
-    textAlign(BASELINE);
-    text("Direction", 10, 725);
-    if(direction == 'n')
-    {
-      text("Heading\nNorth", 25, 775);
-    }
-    else if(direction == 's')
-    {
-      text("Heading\nSouth", 25, 775);
-    }
-    else if(direction == 'e')
-    {
-      text("Heading\nEast", 25, 775);
-    }
-    else if(direction == 'w')
-    {
-      text("Heading\nWest", 25, 775);
-    }
-    else
-    {}
-  }
-  
-  public void showFoodPos()
-  {
-    int xpos = food.getXpos();
-    int ypos = food.getYpos();
-    
-    fill(food.getFoodColor());
-    square(315, 775, 50);
-    fill(0);
-    circle(315, 775, 5);
-    textSize(20);
-    text("[" + (xpos - squareSize) + ", " + (ypos - squareSize)+ "]", 300, 850);
-  }
-  
-  public void showSnakePos()
-  {
-    int xpos = snake.get(0).getXpos();
-    int ypos = snake.get(0).getYpos();
-    
-    fill(snake.get(0).getSnakeColor());
-    square(200, 775, 50);
-    fill(0);
-    circle(200, 775, 5);
-    textSize(20);
-    textAlign(BASELINE);
-    text("[" + (xpos - squareSize) + ", " + (ypos - squareSize)+ "]", 185, 850);
-  }
-  
-  private void showHUD()
-  {
-    showSnakePos();
-    showFoodPos();
-    displayBestSize();
-    displaySize();
-    displayDirection();
-  }
-  
   public void resetGame(snakeHead head)
   {
     //resetScore();
@@ -252,15 +68,15 @@ public class game
     food.updatePos();
     head.reset();
     resetSnakeSize();
-    refreshScreen();
+    refreshScreen(head.getXpos(), head.getYpos(), head.getSnakeColor(), food.getXpos(), food.getYpos(), food.getColor(), bestSize, snake.size(), head.getDirection());
   }
   
-  public void increaseSnakeSize()
+  public void increaseSnakeSize(snakeHead sh)
   {
     for(int i = 0; i < 4; i++)
     {
       snakeSize++;
-      snake.add(new snakeBody());
+      snake.add(new snakeBody(sh.getSnakeColor()));
     }
   }
   
@@ -275,6 +91,7 @@ public class game
   
   public void runGame()
   {
+    menu menu = new menu(width, height, inBounds, (snakeHead)snake.get(0), food, hud);
     //if(!menu.mainMenu())
     if(mode == 0)
     {
@@ -304,10 +121,6 @@ public class game
           s.storePosition();
         }
         head.move();
-        //for(snakeBody s : snake)
-        //{
-        //  s.updatePosition();
-        //}
         head.updatePosition();
         for (int i = snake.size() - 1; i > 0; i--) 
         {
@@ -316,14 +129,10 @@ public class game
         }
         if(head.foodCollision(food))
         {
-          //for(snakeBody s : snake)
-          //{
-            food.updatePos(snake);
-          //}
-          //scoreIncrement();
-          increaseSnakeSize();
+          food.updatePos(snake);
+          increaseSnakeSize((snakeHead)snake.get(0));
         }
-        if(snake.size() > 5)
+        if(snake.size() > 1)
         {
           List<snakeBody> bodySublist = snake.subList(1, snake.size());
           for(snakeBody s : bodySublist)
@@ -339,7 +148,7 @@ public class game
           gameLost = true;
         }
         
-        refreshScreen();
+        refreshScreen(snake.get(0).getXpos(), snake.get(0).getYpos(), snake.get(0).getSnakeColor(), food.getXpos(), food.getYpos(), food.getColor(), bestSize, snake.size(), ((snakeHead)snake.get(0)).getDirection());
         
         for(snakeBody s : snake)
         {
@@ -350,8 +159,7 @@ public class game
       else
       {
         bestSizeCalculator();
-        //lossScreen();
-        menu.lossScreen(snake, food);
+        menu.lossScreen(snake, food, hud.getIBColor(), hud.getOBColor(), hud.getTextColor());
         if (yes.keyboardButtonClicked() || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
         {
           resetGame(head);
@@ -367,7 +175,6 @@ public class game
         }
         if(no.keyboardButtonClicked() || (no.mouseHoveringOverButton() && no.buttonClicked()))
         {
-          //exit();
           resetGame(head);
           mode = 0;
           gameLost = false;

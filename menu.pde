@@ -195,9 +195,14 @@ public class menu
   {
     int bwidth = 150;
     int bheight = 50;
+    float button1y = height / 4;
+    float nextButtonY = bheight + bheight / 10;
+    float button2y = button1y + nextButtonY;
+    float button3y = button2y + nextButtonY;
     int mode = 4;
-    Button defaultTheme = new Button((float)bwidth, (float)bheight, width/2 - bwidth / 2, height/4, 225, 255, 32, 'd', "Default");
-    Button cmgTheme = new Button((float)bwidth, (float)bheight, width/2 - bwidth / 2, height/4 + bheight + bheight / 10, 255, 64, 64, 'c', "CMG");
+    Button defaultTheme = new Button((float)bwidth, (float)bheight, width/2 - bwidth / 2, button1y, 225, 255, 32, 'd', "Default");
+    Button cmgTheme = new Button((float)bwidth, (float)bheight, width/2 - bwidth / 2, button2y, 255, 64, 64, 'c', "CMG");
+    Button cmg2Theme = new Button((float)bwidth, (float)bheight, width/2 - bwidth / 2, button3y, 0, 255, 255, '2', "CMG2");
 
     background(128);
     textAlign(CENTER);
@@ -239,6 +244,23 @@ public class menu
     {
       cmgTheme.restoreButton();
     }
+    
+    //cool math games inspire theme
+    if (cmg2Theme.keyboardButtonClicked() || (cmg2Theme.mouseHoveringOverButton() && cmg2Theme.buttonClicked()))
+    {
+      h.setInBoundsColor(16);
+      h.setOutOfBoundsColor(64);
+      head.setSnakeColorHeadCall(color(0, 255, 255));
+      food.setFoodColor(color(255, 0, 0));
+    }
+    else if (cmg2Theme.mouseHoveringOverButton())
+    {
+      cmg2Theme.darkenButton();
+    }
+    else
+    {
+      cmg2Theme.restoreButton();
+    }
 
     if (goBack.keyboardButtonClicked() || (goBack.mouseHoveringOverButton() && goBack.buttonClicked()))
     {
@@ -256,13 +278,48 @@ public class menu
     goBack.drawButton();
     defaultTheme.drawButton();
     cmgTheme.drawButton();
+    cmg2Theme.drawButton();
     return mode;
   }
 
-  public void lossScreen(ArrayList<snakeBody> snake, food f, int ib, int ob, int tc)
+  public int lossScreen(ArrayList<snakeBody> snake, food f, int ib, int ob, int tc)
   {
+    int buttonWidth = 200;
+    int buttonHeight = 75;
+    int [] buttonXpos =     {width/2 - buttonWidth/2 - 5*buttonWidth/8, width/2 - buttonWidth/2 + 5*buttonWidth/8};
+    int [] buttonYpos =     {                    3*height/8           ,             3*height/8                   };
+    //private int [] buttonTextXpos = {      buttonXpos[0] + buttonWidth/4      ,       buttonXpos[1] + 5*buttonWidth/18   };
+    //private int [] buttonTextYpos = {      buttonYpos[0] + 5*buttonHeight/6   ,       buttonYpos[1] + 5*buttonHeight/6   };
+    
+    Button yes = new Button(buttonWidth, buttonHeight, buttonXpos[0], buttonYpos[0], 0, 255, 0, 'y', "YES");
+    Button no = new Button(buttonWidth, buttonHeight, buttonXpos[1], buttonYpos[1], 255, 0, 0, 'n', "NO");
     List<snakeBody> bodySublist = snake.subList(1, snake.size());
     snakeHead head = (snakeHead)snake.get(0);
+    
+    if (yes.keyboardButtonClicked() || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
+    {
+      return 1;
+    } 
+    else if (yes.mouseHoveringOverButton()) 
+    {
+      yes.darkenButton();
+    }
+    else 
+    {
+      yes.restoreButton();
+    }
+    if(no.keyboardButtonClicked() || (no.mouseHoveringOverButton() && no.buttonClicked()))
+    {
+      return 2;
+    }
+    else if (no.mouseHoveringOverButton())
+    {
+      no.darkenButton();
+    }
+    else
+    {
+      no.restoreButton();
+    }
 
     fill(ob);
     square(0, 0, width);
@@ -285,5 +342,10 @@ public class menu
     text("Game Over!", width/2, width/4);
     textSize(50);
     text("Play again?", width/2, 3*width/8);
+    
+    yes.drawButton();
+    no.drawButton();
+    
+    return 0;
   }
 }

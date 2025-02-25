@@ -87,7 +87,6 @@ public class hud
   public void displaySize(int snakeSize)
   {
     fill(textColor);
-    System.out.println(textColor);
     textSize(25);
     textAlign(BASELINE);
     text("Size: " + snakeSize, 500, 775);

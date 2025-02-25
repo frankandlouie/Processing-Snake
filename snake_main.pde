@@ -2,7 +2,7 @@ void setup()
 {
   //background(0);
   size(700, 900);
-  //frameRate(60);
+  frameRate(60);
 }
 
 game game = new game();

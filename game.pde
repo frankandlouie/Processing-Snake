@@ -12,21 +12,7 @@ public class game
   // 1 = playgame; 2 = settings menu; >2 = more settings stuff
   private int mode = 0;
   
-  private int borderHeight = width;
   private int inBounds = width - squareSize * 2;
-  private color inBoundsColor;
-  private color outOfBoundsColor;
-  
-  private int buttonWidth = 200;
-  private int buttonHeight = 75;
-  //parallel array for button coords. [0] = Yes (Game Over Menu), [1] = No (GOM)
-  private int [] buttonXpos =     {width/2 - buttonWidth/2 - 5*buttonWidth/8, width/2 - buttonWidth/2 + 5*buttonWidth/8};
-  private int [] buttonYpos =     {                    3*height/8           ,             3*height/8                   };
-  private int [] buttonTextXpos = {      buttonXpos[0] + buttonWidth/4      ,       buttonXpos[1] + 5*buttonWidth/18   };
-  private int [] buttonTextYpos = {      buttonYpos[0] + 5*buttonHeight/6   ,       buttonYpos[1] + 5*buttonHeight/6   };
-  
-  Button yes = new Button(buttonWidth, buttonHeight, buttonXpos[0], buttonYpos[0], 0, 255, 0, 'y', "YES");
-  Button no = new Button(buttonWidth, buttonHeight, buttonXpos[1], buttonYpos[1], 255, 0, 0, 'n', "NO");
 
   hud hud = new hud ();
   food food = new food ();
@@ -36,20 +22,9 @@ public class game
   {
     snake.add(new snakeHead());
   }
-  
-  public void setInBoundsColor(color c)
-  {
-    inBoundsColor = c;
-  }
-  
-  public void setOutOfBoundsColor(color c)
-  {
-    outOfBoundsColor = c;
-  }
-  
+
   public void refreshScreen(int snakeX, int snakeY, color snakeColor, int foodX, int foodY, color foodColor, int bestSize, int snakeSize, char snakeDirection)
   {
-    //drawScreenFrame();
     hud.refreshScreen(snakeX, snakeY, snakeColor, foodX, foodY, foodColor, bestSize, snakeSize, snakeDirection);
   }
   
@@ -92,7 +67,6 @@ public class game
   public void runGame()
   {
     menu menu = new menu(width, height, inBounds, (snakeHead)snake.get(0), food, hud);
-    //if(!menu.mainMenu())
     if(mode == 0)
     {
       mode = menu.mainMenu();
@@ -159,36 +133,18 @@ public class game
       else
       {
         bestSizeCalculator();
-        menu.lossScreen(snake, food, hud.getIBColor(), hud.getOBColor(), hud.getTextColor());
-        if (yes.keyboardButtonClicked() || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
+        int result = menu.lossScreen(snake, food, hud.getIBColor(), hud.getOBColor(), hud.getTextColor());
+        if (result == 1)
         {
           resetGame(head);
           gameLost = false;
-        } 
-        else if (yes.mouseHoveringOverButton()) 
-        {
-          yes.darkenButton();
         }
-        else 
-        {
-          yes.restoreButton();
-        }
-        if(no.keyboardButtonClicked() || (no.mouseHoveringOverButton() && no.buttonClicked()))
+        else if (result == 2)
         {
           resetGame(head);
+          gameLost = false;
           mode = 0;
-          gameLost = false;
         }
-        else if (no.mouseHoveringOverButton())
-        {
-          no.darkenButton();
-        }
-        else
-        {
-          no.restoreButton();
-        }
-        yes.drawButton();
-        no.drawButton();
       }
     }
   }

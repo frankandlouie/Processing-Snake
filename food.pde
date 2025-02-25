@@ -105,7 +105,12 @@ public class food
     {
       if((segment.getXpos() == x && segment.getYpos() == y))
       {
+        System.out.println("Food in snake");
         return true;
+      }
+      else
+      {
+        System.out.println("Food not in snake");
       }
     } 
     return false;
@@ -128,12 +133,12 @@ public class food
     
     topLeftCorner[0] = xpos;
     topLeftCorner[1] = ypos;
-    topRightCorner[0] = xpos + squareSize;
-    topRightCorner[1] = ypos;
-    bottomLeftCorner[0] = xpos;
-    bottomLeftCorner[1] = ypos + squareSize;
-    bottomRightCorner[0] = xpos + squareSize;
-    bottomRightCorner[1] = ypos + squareSize;
+    // topRightCorner[0] = xpos + squareSize;
+    // topRightCorner[1] = ypos;
+    // bottomLeftCorner[0] = xpos;
+    // bottomLeftCorner[1] = ypos + squareSize;
+    // bottomRightCorner[0] = xpos + squareSize;
+    // bottomRightCorner[1] = ypos + squareSize;
   }
   
   public void updatePos()
@@ -143,24 +148,22 @@ public class food
     
     topLeftCorner[0] = xpos;
     topLeftCorner[1] = ypos;
-    topRightCorner[0] = xpos + squareSize;
-    topRightCorner[1] = ypos;
-    bottomLeftCorner[0] = xpos;
-    bottomLeftCorner[1] = ypos + squareSize;
-    bottomRightCorner[0] = xpos + squareSize;
-    bottomRightCorner[1] = ypos + squareSize;
+    //topRightCorner[0] = xpos + squareSize;
+    //topRightCorner[1] = ypos;
+    //bottomLeftCorner[0] = xpos;
+    //bottomLeftCorner[1] = ypos + squareSize;
+    //bottomRightCorner[0] = xpos + squareSize;
+    //bottomRightCorner[1] = ypos + squareSize;
   }
   
   public void debug()
   {
-    fill(foodColor);
-    square(310, 775, 50);
     fill(255);
     textSize(25);
-    text("(" + topLeftCorner[0]+", " + topLeftCorner[1] + ")", 100, 400);
-    text("(" + topRightCorner[0]+", " + topRightCorner[1] + ")", 250, 400); 
-    text("(" + bottomLeftCorner[0]+", " + bottomLeftCorner[1] + ")", 100, 525);
-    text("(" + bottomRightCorner[0]+", " + bottomRightCorner[1] + ")", 250, 525);
+    text("(" + (topLeftCorner[0] - squareSize) + ", " + (topLeftCorner[1] - squareSize) + ")", 100, 400);
+    text("(" + (topRightCorner[0] - squareSize) + ", " + (topRightCorner[1] - squareSize) + ")", 250, 400); 
+    text("(" + (bottomLeftCorner[0] - squareSize) + ", " + (bottomLeftCorner[1] - squareSize) + ")", 100, 525);
+    text("(" + (bottomRightCorner[0] - squareSize) + ", " + (bottomRightCorner[1] - squareSize) + ")", 250, 525);
   }
   
   public void display()

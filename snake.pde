@@ -5,22 +5,22 @@ public class snakeBody
 {
   Random rand = new Random();
   
-  /*private*/ int height = 700, width = 700;
-  /*private*/ int squareSize = 25;
-  /*private*/ color snakeColor = color(255, 0, 0);
-  /*private*/ color activeColor = snakeColor;
+  protected int height = 700, width = 700;
+  protected int squareSize = 25;
+  protected color snakeColor = color(255, 0, 0);
+  protected color activeColor = snakeColor;
 
 
-  /*private*/ int xpos = -25;
-  /*private*/ int ypos = -25;
-  /*private*/ int tempX;
-  /*private*/ int tempY;
+  protected int xpos = -25;
+  protected int ypos = -25;
+  protected int tempX;
+  protected int tempY;
   
   //Index [0] = X coord, [1] = Y coord, [2] = Previous X, [3] = Previous Y
-  /*private*/ int [] topLeftCorner = new int[4];
-  /*private*/ int [] topRightCorner = new int[4];
-  /*private*/ int [] bottomLeftCorner = new int[4];
-  /*private*/ int [] bottomRightCorner = new int[4];
+  protected int [] topLeftCorner = new int[4];
+  protected int [] topRightCorner = new int[4];
+  protected int [] bottomLeftCorner = new int[4];
+  protected int [] bottomRightCorner = new int[4];
   
   public snakeBody(){}
   
@@ -129,36 +129,36 @@ public class snakeBody
     
     topLeftCorner[2] = xpos;
     topLeftCorner[3] = ypos;
-    topRightCorner[2] = xpos + squareSize;
-    topRightCorner[3] = ypos;
-    bottomLeftCorner[2] = xpos;
-    bottomLeftCorner[3] = ypos + squareSize;
-    bottomRightCorner[2] = xpos + squareSize;
-    bottomRightCorner[3] = ypos + squareSize;
+    //topRightCorner[2] = xpos + squareSize;
+    //topRightCorner[3] = ypos;
+    //bottomLeftCorner[2] = xpos;
+    //bottomLeftCorner[3] = ypos + squareSize;
+    //bottomRightCorner[2] = xpos + squareSize;
+    //bottomRightCorner[3] = ypos + squareSize;
   }
   
   public void updatePosition()
   {
     topLeftCorner[0] = xpos;
     topLeftCorner[1] = ypos;
-    topRightCorner[0] = xpos + squareSize;
-    topRightCorner[1] = ypos;
-    bottomLeftCorner[0] = xpos;
-    bottomLeftCorner[1] = ypos + squareSize;
-    bottomRightCorner[0] = xpos + squareSize;
-    bottomRightCorner[1] = ypos + squareSize;
+    //topRightCorner[0] = xpos + squareSize;
+    //topRightCorner[1] = ypos;
+    //bottomLeftCorner[0] = xpos;
+    //bottomLeftCorner[1] = ypos + squareSize;
+    //bottomRightCorner[0] = xpos + squareSize;
+    //bottomRightCorner[1] = ypos + squareSize;
   }
   
   public void updatePosition(int xpos, int ypos)
   {
     topLeftCorner[0] = xpos;
     topLeftCorner[1] = ypos;
-    topRightCorner[0] = xpos + squareSize;
-    topRightCorner[1] = ypos;
-    bottomLeftCorner[0] = xpos;
-    bottomLeftCorner[1] = ypos + squareSize;
-    bottomRightCorner[0] = xpos + squareSize;
-    bottomRightCorner[1] = ypos + squareSize;
+    //topRightCorner[0] = xpos + squareSize;
+    //topRightCorner[1] = ypos;
+    //bottomLeftCorner[0] = xpos;
+    //bottomLeftCorner[1] = ypos + squareSize;
+    //bottomRightCorner[0] = xpos + squareSize;
+    //bottomRightCorner[1] = ypos + squareSize;
   }
   
   public void setPos(int x, int y)
@@ -169,27 +169,24 @@ public class snakeBody
   
   public void debugShowCurrentPos()
   {
-    fill(255, 0, 0);
-    square(200, 775, 50);
+    fill(0);
     textSize(25);
-    text("[" + topLeftCorner[0] + ", " + topLeftCorner[1] + "]", 175, 875);
-    text("(" + topLeftCorner[0]+", " + topLeftCorner[1] + ")", 450, 300);
-    text("(" + topRightCorner[0]+", " + topRightCorner[1] + ")", 600, 300); 
-    text("(" + bottomLeftCorner[0]+", " + bottomLeftCorner[1] + ")", 450, 425);
-    text("(" + bottomRightCorner[0]+", " + bottomRightCorner[1] + ")", 600, 425);
+    text("(" + (topLeftCorner[0] - squareSize) + ", " + (topLeftCorner[1] - squareSize) + ")", 450, 300);
+    text("(" + (topRightCorner[0] - squareSize) + ", " + (topRightCorner[1] - squareSize) + ")", 600, 300); 
+    text("(" + (bottomLeftCorner[0] - squareSize) + ", " + (bottomLeftCorner[1] - squareSize) + ")", 450, 425);
+    text("(" + (bottomRightCorner[0] - squareSize) + ", " + (bottomRightCorner[1] - squareSize) + ")", 600, 425);
     text("Current\nPos", 530, 350);
   }
   
   public void debugShowPreviousPos()
   {
-    fill(255, 0 ,0);
-    square(525, 500, 100);
-    fill(255);
+    fill(0);
     textSize(25);
-    text("(" + topLeftCorner[2]+", " + topLeftCorner[3] + ")", 450, 500);
-    text("(" + topRightCorner[2]+", " + topRightCorner[3] + ")", 600, 500); 
-    text("(" + bottomLeftCorner[2]+", " + bottomLeftCorner[3] + ")", 450, 625);
-    text("(" + bottomRightCorner[2]+", " + bottomRightCorner[3] + ")", 600, 625);
+    text("[" + (topLeftCorner[2] - squareSize) + ", " + (topLeftCorner[3] - squareSize) + "]", 175, 875);
+    text("(" + (topLeftCorner[2] - squareSize) + ", " + (topLeftCorner[3] - squareSize) + ")", 450, 500);
+    text("(" + (topRightCorner[2] - squareSize) + ", " + (topRightCorner[3] - squareSize) + ")", 600, 500); 
+    text("(" + (bottomLeftCorner[2] - squareSize) + ", " + (bottomLeftCorner[3] - squareSize) + ")", 450, 625);
+    text("(" + (bottomRightCorner[2] - squareSize) + ", " + (bottomRightCorner[3] - squareSize) + ")", 600, 625);
     text("Previous\nPos", 530, 550);
   }
     
@@ -257,10 +254,11 @@ class snakeHead extends snakeBody
   {
     boolean crashed = false; 
     
-    if((topLeftCorner[1] == 0 && getDirection() == 'n') || 
-       (topLeftCorner[0] == 0 && getDirection() == 'w') ||
-       (bottomRightCorner[1] == height && getDirection() == 's') ||
-       (bottomRightCorner[0] == width && getDirection() == 'e'))
+    //if((topLeftCorner[1] == 0 && getDirection() == 'n') || 
+    //   (topLeftCorner[0] == 0 && getDirection() == 'w') ||
+    //   (bottomRightCorner[1] == height && getDirection() == 's') ||
+    //   (bottomRightCorner[0] == width && getDirection() == 'e'))
+   if(topLeftCorner[0] == 0 || topLeftCorner[1] == 0 || topLeftCorner[0] == width - squareSize || topLeftCorner[1] == height - squareSize)
     {
       crashed = true;
       System.out.println("died");

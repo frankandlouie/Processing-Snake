@@ -51,7 +51,7 @@ public class game
     for(int i = 0; i < 4; i++)
     {
       snakeSize++;
-      snake.add(new snakeBody(sh.getSnakeColor()));
+      snake.add(new snakeBody(sh.getSnakeColor(), snakeSize));
     }
   }
   

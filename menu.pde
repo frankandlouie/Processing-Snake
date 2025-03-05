@@ -43,45 +43,21 @@ public class menu
     text("SNAKE", width/2, height/8);
     textAlign(BASELINE);
 
-    if (play.keyboardButtonClicked() || (play.mouseHoveringOverButton() && play.buttonClicked()))
+    if(play.interaction())
     {
       mode = 1;
-    } 
-    else if (play.mouseHoveringOverButton())
-    {
-      play.darkenButton();
-    } 
-    else
-    {
-      play.restoreButton();
     }
-
-    if (exit.keyboardButtonClicked() || (exit.mouseHoveringOverButton() && exit.buttonClicked()))
+    
+    if(exit.interaction())
     {
       exit();
-    } 
-    else if (exit.mouseHoveringOverButton())
-    {
-      exit.darkenButton();
-    } 
-    else
-    {
-      exit.restoreButton();
     }
-
-    if (settings.keyboardButtonClicked() || (settings.mouseHoveringOverButton() && settings.buttonClicked()))
+    
+    if(settings.interaction())
     {
       mode = 2;
-    } 
-    else if (settings.mouseHoveringOverButton())
-    {
-      settings.darkenButton();
-    } 
-    else
-    {
-      settings.restoreButton();
     }
-
+    
     play.drawButton();
     exit.drawButton();
     settings.drawButton();
@@ -107,44 +83,19 @@ public class menu
     //0 = main menu; 1 = play game; 2 = settings; > 2 = more settings
     int mode = 2;
 
-    if (goBack.keyboardButtonClicked() || (goBack.mouseHoveringOverButton() && goBack.buttonClicked()))
+    if(goBack.interaction())
     {
       mode = 0;
     }
-    else if (goBack.mouseHoveringOverButton())
-    {
-      goBack.darkenButton();
-    }
-    else
-    {
-      goBack.restoreButton();
-    }
-
-    if (changeTheme.keyboardButtonClicked() || (changeTheme.mouseHoveringOverButton() && changeTheme.buttonClicked()))
+    
+    if(changeTheme.interaction())
     {
       mode = 4;
     }
-    else if (changeTheme.mouseHoveringOverButton())
+    
+    if(htp.interaction())
     {
-      changeTheme.darkenButton();
-    }
-    else
-    {
-      changeTheme.restoreButton();
-    }
-
-    if (htp.keyboardButtonClicked() || (htp.mouseHoveringOverButton() && htp.buttonClicked()))
-    {
-      //htpMenu();
       mode = 3;
-    }
-    else if (htp.mouseHoveringOverButton())
-    {
-      htp.darkenButton();
-    }
-    else
-    {
-      htp.restoreButton();
     }
 
     goBack.drawButton();
@@ -173,17 +124,9 @@ public class menu
     text("Collect the food to grow!", width / 10, 6 * height / 10);
     text("Get to your highest size!", width / 10, 7 * height / 10);
     
-    if (goBack.keyboardButtonClicked() || (goBack.mouseHoveringOverButton() && goBack.buttonClicked()))
+    if(goBack.interaction())
     {
       mode = 2;
-    }
-    else if (goBack.mouseHoveringOverButton())
-    {
-      goBack.darkenButton();
-    }
-    else
-    {
-      goBack.restoreButton();
     }
     
     goBack.drawButton();
@@ -210,69 +153,34 @@ public class menu
     fill(0);
     text("Change Theme", width/2, height/8);
     textAlign(BASELINE);
-
-    //default theme
-    if (defaultTheme.keyboardButtonClicked() || (defaultTheme.mouseHoveringOverButton() && defaultTheme.buttonClicked()))
+    
+    if(defaultTheme.interaction())
     {
       h.setInBoundsColor(196);
       h.setOutOfBoundsColor(128);
       head.setSnakeColorHeadCall(color(255, 0, 0));
       food.setFoodColor(color(225, 255, 32));
     }
-    else if (defaultTheme.mouseHoveringOverButton())
-    {
-      defaultTheme.darkenButton();
-    }
-    else
-    {
-      defaultTheme.restoreButton();
-    }
-
-    //cool math games inspire theme
-    if (cmgTheme.keyboardButtonClicked() || (cmgTheme.mouseHoveringOverButton() && cmgTheme.buttonClicked()))
+    
+    if(cmgTheme.interaction())
     {
       h.setInBoundsColor(16);
       h.setOutOfBoundsColor(64);
       head.setSnakeColorHeadCall(color(96, 255, 96));
       food.setFoodColor(color(255, 0, 0));
     }
-    else if (cmgTheme.mouseHoveringOverButton())
-    {
-      cmgTheme.darkenButton();
-    }
-    else
-    {
-      cmgTheme.restoreButton();
-    }
     
-    //cool math games inspire theme
-    if (cmg2Theme.keyboardButtonClicked() || (cmg2Theme.mouseHoveringOverButton() && cmg2Theme.buttonClicked()))
+    if(cmg2Theme.interaction())
     {
       h.setInBoundsColor(16);
       h.setOutOfBoundsColor(64);
       head.setSnakeColorHeadCall(color(0, 255, 255));
       food.setFoodColor(color(255, 0, 0));
     }
-    else if (cmg2Theme.mouseHoveringOverButton())
-    {
-      cmg2Theme.darkenButton();
-    }
-    else
-    {
-      cmg2Theme.restoreButton();
-    }
-
-    if (goBack.keyboardButtonClicked() || (goBack.mouseHoveringOverButton() && goBack.buttonClicked()))
+    
+    if(goBack.interaction())
     {
       mode = 2;
-    }
-    else if (goBack.mouseHoveringOverButton())
-    {
-      goBack.darkenButton();
-    }
-    else
-    {
-      goBack.restoreButton();
     }
 
     goBack.drawButton();
@@ -296,35 +204,14 @@ public class menu
     List<snakeBody> bodySublist = snake.subList(1, snake.size());
     snakeHead head = (snakeHead)snake.get(0);
     
-    if (yes.keyboardButtonClicked() || (yes.mouseHoveringOverButton() && yes.buttonClicked()))
+    if(yes.interaction())
     {
       return 1;
-    } 
-    else if (yes.mouseHoveringOverButton()) 
-    {
-      yes.darkenButton();
     }
-    else 
-    {
-      yes.restoreButton();
-    }
-    if(no.keyboardButtonClicked() || (no.mouseHoveringOverButton() && no.buttonClicked()))
+    if(no.interaction())
     {
       return 2;
     }
-    else if (no.mouseHoveringOverButton())
-    {
-      no.darkenButton();
-    }
-    else
-    {
-      no.restoreButton();
-    }
-
-    fill(ob);
-    square(0, 0, width);
-    fill(ib);
-    square(0 + head.getSnakeSize(), 0 + head.getSnakeSize(), inBounds);
 
     for (snakeBody s : bodySublist)
     {

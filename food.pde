@@ -105,12 +105,7 @@ public class food
     {
       if((segment.getXpos() == x && segment.getYpos() == y))
       {
-        System.out.println("Food in snake");
         return true;
-      }
-      else
-      {
-        System.out.println("Food not in snake");
       }
     } 
     return false;

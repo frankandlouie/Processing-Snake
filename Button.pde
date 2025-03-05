@@ -34,6 +34,24 @@ public class Button
     currentColor = butColor;
   }
   
+  public boolean interaction()
+  {
+    if (keyboardButtonClicked() || (mouseHoveringOverButton() && buttonClicked()))
+    {
+      return true;
+    } 
+    else if (mouseHoveringOverButton()) 
+    {
+      darkenButton();
+    }
+    else 
+    {
+      restoreButton();
+    }
+    
+    return false;
+  }
+  
   public void drawButton()
   {
     fill(currentColor);
